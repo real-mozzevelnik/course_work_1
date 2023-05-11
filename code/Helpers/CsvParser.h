@@ -7,7 +7,7 @@
 class CsvParser
 {
     public:
-        static vector<vector<char>> ParseCsv(const char* filepath);
+        static vector<vector<int>> ParseCsv(const char* filepath);
 };
 
 #endif

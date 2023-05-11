@@ -11,7 +11,7 @@ class GameObject
         // Конструктор, принимает путь к файлу с изображением объекта, начальные координаты.
         GameObject(const char *texturesheet, int x, int y);
         // Вирутальный деструктор, дабы вызывались деструкторы наследников.
-        virtual ~GameObject() {};
+        virtual ~GameObject() {SDL_DestroyTexture(objTexture);};
 
         // Обновление объекта.
         virtual void Update();

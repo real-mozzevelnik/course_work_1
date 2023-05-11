@@ -1,2 +1,0 @@
-app:
-	g++ main.cpp Game/Game.cpp Game/Level.cpp Helpers/TextureManager.cpp Objects/StaticObjects/GameObject.cpp Objects/StaticObjects/Background.cpp Objects/Entities/Entity.cpp Objects/Entities/Player.cpp Objects/StaticObjects/Tile.cpp -o test -lSDL2 -lGL -lSDL2_image

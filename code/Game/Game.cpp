@@ -21,6 +21,7 @@ Game::Game(const char* title, int xpos, int ypos, int width, int heigth, bool fu
     if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
     {
         cout << "Init success" << endl;
+        atexit(SDL_Quit);
 
         // Создаем окно.
         window = SDL_CreateWindow(title, xpos, ypos, width, heigth, flags);
@@ -57,9 +58,8 @@ Game::~Game()
     // Удаляем уровень.
     delete level;
     // Освобождаем всю выделенную SDL память.
-    SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
-    SDL_Quit();
+    SDL_DestroyWindow(window);
     cout << "End" << endl;
 }
 

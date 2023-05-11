@@ -10,9 +10,9 @@ bool Level::do_move_objects;
 Level::Level()
 {
     // Загружаем задний фон.
-    bg = new Background("../graphics/background/level1.png", 0, 0);
+    bg = new Background("../graphics/background/level_1.png", 0, 0);
     // Создаем игрока.
-    player = new Player("../graphics/units/player/walk.png", 200, 20);
+    player = new Player("../graphics/player/level_1/running/0.png", 200, 20);
 
 }
 
