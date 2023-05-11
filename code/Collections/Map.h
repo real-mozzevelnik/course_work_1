@@ -1,19 +1,13 @@
 #ifndef Map_h
 #define Map_h
 
-#include <vector>
-
+#include "../Helpers/CsvParser.h"
 #include "../Objects/StaticObjects/Tile.h"
 
 class Map
 {
     public:
-        vector<Tile *> tiles;
-        vector<char> tiles_csv;
-
-    public:
-        Map();
-        ~Map() {};
+        static void CreateMap();
 };
 
 

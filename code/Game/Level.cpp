@@ -2,6 +2,7 @@
 #include "../Objects/StaticObjects/Background.h"
 #include "../Objects/Entities/Player.h"
 #include "../Objects/StaticObjects/Tile.h"
+#include "../Collections/Map.h"
 
 // Объявляем статические переменные.
 vector<SDL_Rect*> Level::movable_objects;
@@ -13,6 +14,9 @@ Level::Level()
     bg = new Background("../graphics/background/level_1.png", 0, 0);
     // Создаем игрока.
     player = new Player("../graphics/player/level_1/running/0.png", 200, 20);
+
+    Map::CreateMap();
+
 
 }
 
