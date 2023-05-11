@@ -15,7 +15,7 @@ Level::Level()
     // Создаем игрока.
     player = new Player("../graphics/player/level_1/running/0.png", 200, 20);
 
-    Map::CreateMap();
+    // Map::CreateMap();
 
 
 }

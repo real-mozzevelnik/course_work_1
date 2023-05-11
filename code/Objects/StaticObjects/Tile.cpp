@@ -8,6 +8,5 @@ Tile::Tile(const char *texturesheet, int x, int y) : GameObject(texturesheet, x,
     srcRect.x = srcRect.y = 10;
 
     srcRect.w = srcRect.h = TILE_SIZE;
-
 }
 
