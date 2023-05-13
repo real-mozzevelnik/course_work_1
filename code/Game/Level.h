@@ -6,6 +6,7 @@
 
 class Background;
 class Player;
+class Tile;
 
 
 // Класс, отвечающий за логику игрового уровня.
@@ -13,9 +14,11 @@ class Level
 {
     public:
         // Фон текущего уровня.
-        Background *bg;
+        static Background *bg;
         // Игрок.
-        Player *player;
+        static Player *player;
+        // Тайлы.
+        static vector<Tile*> tiles; 
         // Массив объектов, которые будут передвигаться при движении игрока.
         static vector<SDL_Rect*> movable_objects;
         // Переменная, задающая условия для перемещения объектов.

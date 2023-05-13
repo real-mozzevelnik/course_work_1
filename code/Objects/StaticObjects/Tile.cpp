@@ -1,12 +1,15 @@
 #include "Tile.h"
-#include "../../Game/Game.h"
+#include "../../Game/Level.h"
 
-Tile::Tile(const char *texturesheet, int x, int y) : GameObject(texturesheet, x, y)
+Tile::Tile(const char *texturesheet, int x, int y, SDL_Rect tex_num) : GameObject(texturesheet, x, y)
 {
+    Level::movable_objects.push_back(&destRect);
     destRect.w = TILE_SIZE;
     destRect.h = TILE_SIZE;
-    srcRect.x = srcRect.y = 10;
-
-    srcRect.w = srcRect.h = TILE_SIZE;
+    destRect.x = x;
+    destRect.y = y;
+    xpos = x;
+    ypos = y;
+    srcRect = tex_num;
 }
 

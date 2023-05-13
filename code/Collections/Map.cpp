@@ -3,9 +3,12 @@
 
 #include "../Helpers/CsvParser.h"
 #include "../Objects/StaticObjects/Tile.h"
+#include "../Game/Level.h"
+#include "../Objects/StaticObjects/Background.h"
 
 void Map::CreateMap()
 {
+    // Загружаем все слои карты.
     map<string, vector<vector<int>>> layouts {
         {"terrain", CsvParser::ParseCsv("../level/level_1_csv/terrain.csv")},
         {"box", CsvParser::ParseCsv("../level/level_1_csv/box.csv")},
@@ -18,6 +21,12 @@ void Map::CreateMap()
         {"dialog", CsvParser::ParseCsv("../level/level_1_csv/dialog.csv")}
     };
 
+    // Загружаем фон.
+    Level::bg = new Background("../graphics/background/level_1.png", 0, 0);
+    SDL_Texture* terrain_img = TextureManager::LaodTexture("../graphics/tiles/terrain_tiles/level_1.png");
+    vector<SDL_Rect> terrain_rects = TextureManager::CutGraphics(terrain_img, TILE_SIZE);
+
+    // Загружаем все объекты по слоям.
     for (const auto& [style, layout] : layouts)
     {
         for (int row_index = 0; row_index < layout.size(); row_index++)
@@ -32,7 +41,8 @@ void Map::CreateMap()
 
                 if (style == "terrain")
                 {
-                    // create terrain
+                    Tile* tile = new Tile("../graphics/tiles/terrain_tiles/level_1.png", x, y, terrain_rects[layout[row_index][col_index]]);
+                    Level::tiles.push_back(tile);
                 }
                 else if (style == "box")
                 {

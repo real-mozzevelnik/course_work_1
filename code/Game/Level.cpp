@@ -7,13 +7,17 @@
 // Объявляем статические переменные.
 vector<SDL_Rect*> Level::movable_objects;
 bool Level::do_move_objects;
+Background* Level::bg;
+Player* Level::player;
+vector<Tile*> Level::tiles;
 
 Level::Level()
 {
-    // Загружаем задний фон.
-    bg = new Background("../graphics/background/level_1.png", 0, 0);
     // Создаем игрока.
     player = new Player("../graphics/player/level_1/running/0.png", 200, 20);
+    Map::CreateMap();
+
+
 
     // Map::CreateMap();
 
@@ -27,6 +31,8 @@ Level::~Level()
     delete bg;
     // Удаляем игрока.
     delete player;
+    for (int i = 0; i < tiles.size(); i++)
+        delete tiles[i];
 };
 
 
@@ -55,6 +61,9 @@ void Level::Update()
     MoveObjects();
     // Прорисовываем фон.
     bg->Update();
+    for (int i = 0; i < tiles.size(); i++)
+        tiles[i]->Update();
+
     player->Update();
 }
 
