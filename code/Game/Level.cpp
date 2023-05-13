@@ -10,18 +10,11 @@ bool Level::do_move_objects;
 Background* Level::bg;
 Player* Level::player;
 vector<Tile*> Level::tiles;
+vector<GameObject*> Level::collidable_objects;
 
 Level::Level()
 {
-    // Создаем игрока.
-    player = new Player("../graphics/player/level_1/running/0.png", 200, 20);
     Map::CreateMap();
-
-
-
-    // Map::CreateMap();
-
-
 }
 
 
@@ -34,6 +27,47 @@ Level::~Level()
     for (int i = 0; i < tiles.size(); i++)
         delete tiles[i];
 };
+
+
+void Level::HorizontalCollisions()
+{
+    player->Gravity();
+    for (auto& i : collidable_objects)
+    {
+        if (SDL_HasIntersection(&player->destRect, &i->destRect))
+        {
+            if (player->directionX > 0) 
+            {
+                    player->xpos -= 2; 
+                    player->directionX = 0; 
+            }
+            if (player->directionX < 0)
+            {
+                    player->xpos += 2; 
+                    player->directionX = 0; 
+            }
+            if (player->directionY > 0)
+            {
+                    player->inAir = false;
+                    player->ypos -= 2; 
+                    player->Yspeed = 0; 
+            }
+            if (player->directionY < 0)
+                player->ypos = i->ypos;
+        }
+    }
+}
+
+void Level::VerticalCollisions()
+{
+    for (auto& i : collidable_objects)
+    {
+        if (SDL_HasIntersection(&player->destRect, &i->destRect))
+        {
+            
+        }
+    }
+}
 
 
 // Передвижение объектов.
@@ -65,6 +99,7 @@ void Level::Update()
         tiles[i]->Update();
 
     player->Update();
+    HorizontalCollisions();
 }
 
 

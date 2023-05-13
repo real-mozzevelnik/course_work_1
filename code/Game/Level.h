@@ -7,6 +7,7 @@
 class Background;
 class Player;
 class Tile;
+class GameObject;
 
 
 // Класс, отвечающий за логику игрового уровня.
@@ -19,6 +20,7 @@ class Level
         static Player *player;
         // Тайлы.
         static vector<Tile*> tiles; 
+        static vector<GameObject*> collidable_objects;
         // Массив объектов, которые будут передвигаться при движении игрока.
         static vector<SDL_Rect*> movable_objects;
         // Переменная, задающая условия для перемещения объектов.
@@ -26,6 +28,8 @@ class Level
     public:
         Level();
         ~Level();
+        void HorizontalCollisions();
+        void VerticalCollisions();
         // Запуск уровня.
         void Run();
         // Обновление всех объектов на уровне.

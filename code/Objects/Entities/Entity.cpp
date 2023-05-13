@@ -13,5 +13,5 @@ Entity::Entity(const char *texturesheet, int x, int y) : GameObject(texturesheet
 
 void Entity::LoadAnimationRects()
 {
-    animation_frames = TextureManager::CutGraphics(objTexture, BASIC_SIZE);
+    animation_frames = TextureManager::CutGraphics(objTexture, BASIC_ENTITY_SIZE);
 }

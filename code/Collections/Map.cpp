@@ -5,6 +5,7 @@
 #include "../Objects/StaticObjects/Tile.h"
 #include "../Game/Level.h"
 #include "../Objects/StaticObjects/Background.h"
+#include "../Objects/Entities/Player.h"
 
 void Map::CreateMap()
 {
@@ -22,7 +23,7 @@ void Map::CreateMap()
     };
 
     // Загружаем фон.
-    Level::bg = new Background("../graphics/background/level_1.png", 0, 0);
+    Level::bg = new Background("../graphics/background/level_1.png", 0, TILE_SIZE);
     SDL_Texture* terrain_img = TextureManager::LaodTexture("../graphics/tiles/terrain_tiles/level_1.png");
     vector<SDL_Rect> terrain_rects = TextureManager::CutGraphics(terrain_img, TILE_SIZE);
 
@@ -38,11 +39,14 @@ void Map::CreateMap()
 
                 int x = col_index * TILE_SIZE;
                 int y = row_index * TILE_SIZE;
+                x -= 200;
+                y += TILE_SIZE;
 
                 if (style == "terrain")
                 {
                     Tile* tile = new Tile("../graphics/tiles/terrain_tiles/level_1.png", x, y, terrain_rects[layout[row_index][col_index]]);
                     Level::tiles.push_back(tile);
+                    Level::collidable_objects.push_back(static_cast<GameObject*>(tile));
                 }
                 else if (style == "box")
                 {
@@ -66,7 +70,7 @@ void Map::CreateMap()
                 }
                 else if (style == "player")
                 {
-                    // create player
+                    Level::player = new Player("../graphics/charlieTheCapybaraAnimationSheet.png", x, y);
                 }
                 else if (style == "grass")
                 {

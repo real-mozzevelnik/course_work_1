@@ -3,6 +3,10 @@
 
 Player::Player(const char *texturesheet, int x, int y) : Entity(texturesheet, x, y)
 {
+    directionX = directionY = 0;
+    JumpSpeed = -10;
+    GravitySpeed = 0.2;
+    Yspeed = 0;
     // Задаем скорость.
     speed = PLAYER_SPEED;
     // Задаем начальное направляение игрока.
@@ -23,6 +27,10 @@ Player::~Player()
 void Player::Move()
 {
     HandleInput();
+    if (directionX > 0)
+        xpos += speed;
+    else if (directionX < 0)
+        xpos -= speed;
 }
 
 
@@ -40,8 +48,9 @@ void Player::HandleInput()
             Level::do_move_objects = true;
             // Игрок смотрит налево.
             facing = LEFT;
+            directionX = -1;
             // Двигаем игрока.
-            xpos -= speed;
+            // xpos -= speed;
             break;
         
         // Если клавиша "d" - персонаж идет вправо.
@@ -50,8 +59,15 @@ void Player::HandleInput()
             Level::do_move_objects = true;
             // Игрок смотрит направо.
             facing = RIGHT;
+            directionX = 1;
             // Двигаем игрока.
-            xpos += speed;
+            // xpos += speed;
+            break;
+
+        case SDLK_SPACE:
+            Jump();
+            directionY = -1;
+            inAir = true;
             break;
 
         default:
@@ -63,7 +79,25 @@ void Player::HandleInput()
     {
         // Запрещаем двигать объекты.
         Level::do_move_objects = false;
+        if (!inAir)
+            directionX = 0;
     }
+}
+
+
+
+
+void Player::Gravity()
+{
+    cout << Yspeed << endl;
+    Yspeed += GravitySpeed;
+    ypos += Yspeed;
+    if (Yspeed > 0) directionY = 1;
+}
+
+void Player::Jump()
+{
+    Yspeed = JumpSpeed;
 }
 
 
@@ -76,5 +110,5 @@ void Player::Update()
     destRect.x = xpos;
     destRect.y = ypos;
     // Отправляем в рендерер.
-    SDL_RenderCopy(Game::renderer, objTexture, &animation_frames[0], &destRect);
+    SDL_RenderCopy(Game::renderer, objTexture, &animation_frames[9], &destRect);
 }

@@ -8,6 +8,12 @@
 class Player: public Entity
 {
     public:
+        int directionX, directionY;
+        float Yspeed;
+        float GravitySpeed;
+        float JumpSpeed;
+        bool inAir;
+    public:
         // Конструктор и деструктор.
         Player(const char *texturesheet, int x, int y);
         ~Player();
@@ -15,6 +21,8 @@ class Player: public Entity
         void Move() override;
         // Обновление игрока.
         void Update() override;
+        void Gravity();
+        void Jump();
 
     private:
         // Считывание нажатий клавиш для взаимодействия с персонажем.
