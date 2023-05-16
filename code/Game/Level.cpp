@@ -11,7 +11,9 @@ Background* Level::bg;
 Player* Level::player;
 vector<Tile*> Level::tiles;
 vector<GameObject*> Level::collidable_objects;
+vector<Tile*> Level::coins;
 Keyboard Level::kb;
+
 
 Level::Level()
 {
@@ -25,8 +27,13 @@ Level::~Level()
     delete bg;
     // Удаляем игрока.
     delete player;
+    // Удаляем тайлы.
     for (int i = 0; i < tiles.size(); i++)
         delete tiles[i];
+    // Удаляем монеты.
+    for (int i = 0; i < coins.size(); i++)
+        delete coins[i];
+
 };
 
 
@@ -78,6 +85,26 @@ void Level::VerticalCollisions()
 }
 
 
+void Level::GetCoins()
+{
+    Tile* tmp_tile;
+    for (int i = 0; i < coins.size(); i++)
+    {
+        if (SDL_HasIntersection(&player->destRect, &coins[i]->destRect))
+        {
+            tmp_tile = coins[i];
+            coins.erase(coins.begin() + i);
+            for (int j = 0; j < movable_objects.size(); j++)
+            {
+                if (movable_objects[j] == &tmp_tile->destRect)
+                    movable_objects.erase(movable_objects.begin() + j);
+            }
+            delete tmp_tile;
+        }
+    }
+}
+
+
 // Передвижение объектов.
 void Level::MoveObjects()
 {
@@ -106,9 +133,13 @@ void Level::Update()
     for (int i = 0; i < tiles.size(); i++)
         tiles[i]->Update();
 
+    for (int i = 0; i < coins.size(); i++)
+        coins[i]->Update();
+
     player->Update();
     HorizontalCollisions();
     VerticalCollisions();
+    GetCoins();
 }
 
 

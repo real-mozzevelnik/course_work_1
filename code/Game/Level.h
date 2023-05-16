@@ -22,6 +22,9 @@ class Level
         static Player *player;
         // Тайлы.
         static vector<Tile*> tiles; 
+        // Массив монет.
+        static vector<Tile*> coins;
+        // Массив объектов, с которыми игрок сталкивается.
         static vector<GameObject*> collidable_objects;
         // Массив объектов, которые будут передвигаться при движении игрока.
         static vector<SDL_Rect*> movable_objects;
@@ -32,8 +35,11 @@ class Level
     public:
         Level();
         ~Level();
+        // Коллизии.
         void HorizontalCollisions();
         void VerticalCollisions();
+        // Сбор монет.
+        void GetCoins();
         // Запуск уровня.
         void Run();
         // Обновление всех объектов на уровне.

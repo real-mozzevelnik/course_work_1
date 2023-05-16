@@ -58,7 +58,8 @@ void Map::CreateMap()
                 }
                 else if (style == "coins")
                 {
-                    // create coins
+                    Tile* tile = new Tile("../graphics/tiles/coin.png", x, y, {0,0,32,32});
+                    Level::coins.push_back(tile);
                 }
                 else if (style == "enemies")
                 {
