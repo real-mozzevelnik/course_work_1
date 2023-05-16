@@ -89,6 +89,13 @@ void Game::HandleEvents()
     case SDL_QUIT:
         isRunning = false;
         break;
+
+    case SDL_KEYDOWN:
+        Level::kb.HandleKeyEvent(static_cast<int>(event.key.keysym.sym), 1);
+        break;
+
+    case SDL_KEYUP:
+        Level::kb.HandleKeyEvent(static_cast<int>(event.key.keysym.sym), 0);
     
     default:
         break;

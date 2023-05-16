@@ -27,60 +27,89 @@ Player::~Player()
 void Player::Move()
 {
     HandleInput();
-    if (directionX > 0)
-        xpos += speed;
-    else if (directionX < 0)
-        xpos -= speed;
+        
 }
 
+
+// // Считывание нажатий клавиш для взаимодействия с персонажем.
+// void Player::HandleInput()
+// {
+//     // Если действие - нажатие клавиши.
+//     if (Game::event.type == SDL_KEYDOWN || inAir)
+//     {
+//         switch (Game::event.key.keysym.sym)
+//         {
+//         // Если клавиша "a" - персонаж идет влево.
+//         case SDLK_a:
+//             // Разрешаем двигать объекты.
+//             Level::do_move_objects = true;
+//             // Игрок смотрит налево.
+//             facing = LEFT;
+//             directionX = -PLAYER_SPEED;
+//             break;
+        
+//         // Если клавиша "d" - персонаж идет вправо.
+//         case SDLK_d:
+//             // Разрешаем двигать объекты.
+//             Level::do_move_objects = true;
+//             // Игрок смотрит направо.
+//             facing = RIGHT;
+//             directionX = PLAYER_SPEED;
+//             break;
+
+//         case SDLK_SPACE:
+//             Jump();
+//             directionY = -1;
+//             inAir = true;
+//             break;
+
+//         default:
+//             break;
+//         }
+//     }
+//     // Если действие - отпуск клавиши.
+//     if (Game::event.type == SDL_KEYUP)
+//     {
+//         directionX = 0;
+//         Level::do_move_objects = false;
+//     }
+// }
 
 // Считывание нажатий клавиш для взаимодействия с персонажем.
 void Player::HandleInput()
 {
-    // Если действие - нажатие клавиши.
-    if (Game::event.type == SDL_KEYDOWN)
+    // Если клавиша "a" - персонаж идет влево.
+    if (Level::kb.keystate[SDLK_a])
     {
-        switch (Game::event.key.keysym.sym)
-        {
-        // Если клавиша "a" - персонаж идет влево.
-        case SDLK_a:
-            // Разрешаем двигать объекты.
-            Level::do_move_objects = true;
-            // Игрок смотрит налево.
-            facing = LEFT;
-            directionX = -1;
-            // Двигаем игрока.
-            // xpos -= speed;
-            break;
+        // Разрешаем двигать объекты.
+        Level::do_move_objects = true;
+        // Игрок смотрит налево.
+        facing = LEFT;
+        directionX = -PLAYER_SPEED;
+    }
         
-        // Если клавиша "d" - персонаж идет вправо.
-        case SDLK_d:
-            // Разрешаем двигать объекты.
-            Level::do_move_objects = true;
-            // Игрок смотрит направо.
-            facing = RIGHT;
-            directionX = 1;
-            // Двигаем игрока.
-            // xpos += speed;
-            break;
+    // Если клавиша "d" - персонаж идет вправо.
+    if (Level::kb.keystate[SDLK_d])
+    {
+        // Разрешаем двигать объекты.
+        Level::do_move_objects = true;
+        // Игрок смотрит направо.
+        facing = RIGHT;
+        directionX = PLAYER_SPEED;
+    }
 
-        case SDLK_SPACE:
+    if (Level::kb.keystate[SDLK_SPACE])
+    {
             Jump();
             directionY = -1;
             inAir = true;
-            break;
 
-        default:
-            break;
-        }
     }
     // Если действие - отпуск клавиши.
-    else if (Game::event.type == SDL_KEYUP)
+    if (Game::event.type == SDL_KEYUP)
     {
-        // Запрещаем двигать объекты.
+        directionX = 0;
         Level::do_move_objects = false;
-        if (!inAir)
-            directionX = 0;
     }
 }
 
@@ -89,7 +118,6 @@ void Player::HandleInput()
 
 void Player::Gravity()
 {
-    cout << Yspeed << endl;
     Yspeed += GravitySpeed;
     ypos += Yspeed;
     if (Yspeed > 0) directionY = 1;

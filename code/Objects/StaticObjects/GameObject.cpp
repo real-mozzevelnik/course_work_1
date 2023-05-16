@@ -16,6 +16,8 @@ GameObject::GameObject(const char *texturesheet, int x, int y)
 // Обновление объекта.
 void GameObject::Update()
 {
+    xpos = destRect.x;
+    ypos = destRect.y;
     // Добавляем объект в буфер рендерера.
     SDL_RenderCopy(Game::renderer, objTexture, &srcRect, &destRect);
 }

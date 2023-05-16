@@ -11,6 +11,7 @@ Background* Level::bg;
 Player* Level::player;
 vector<Tile*> Level::tiles;
 vector<GameObject*> Level::collidable_objects;
+Keyboard Level::kb;
 
 Level::Level()
 {
@@ -31,42 +32,49 @@ Level::~Level()
 
 void Level::HorizontalCollisions()
 {
-    player->Gravity();
+    player->xpos += player->directionX;
     for (auto& i : collidable_objects)
     {
         if (SDL_HasIntersection(&player->destRect, &i->destRect))
         {
             if (player->directionX > 0) 
             {
-                    player->xpos -= 2; 
-                    player->directionX = 0; 
+                if ((player->xpos+BASIC_ENTITY_SIZE > i->xpos) && (player->ypos >= i->ypos))
+                    { player->xpos = i->xpos-TILE_SIZE - 2; player->directionX = 0;}
             }
             if (player->directionX < 0)
-            {
-                    player->xpos += 2; 
-                    player->directionX = 0; 
+            {   
+                if ((player->xpos < i->xpos+TILE_SIZE) && (player->ypos >= i->ypos))
+                    { player->xpos = i->xpos+TILE_SIZE + 2; player->directionX = 0; }
             }
-            if (player->directionY > 0)
-            {
-                    player->inAir = false;
-                    player->ypos -= 2; 
-                    player->Yspeed = 0; 
-            }
-            if (player->directionY < 0)
-                player->ypos = i->ypos;
+            
         }
     }
 }
 
 void Level::VerticalCollisions()
 {
+    player->Gravity();
     for (auto& i : collidable_objects)
     {
         if (SDL_HasIntersection(&player->destRect, &i->destRect))
         {
-            
+            if (player->directionY > 0)
+            {
+                if ((player->ypos <= i->ypos-1) && ((player->xpos >= i->xpos-30) && (player->xpos < i->xpos+TILE_SIZE)))
+                {
+                    player->inAir = false;
+                    player->ypos = i->ypos-TILE_SIZE; 
+                    player->Yspeed = 0; 
+                    player->GravitySpeed = 0;
+                }
+            }
+            // if (player->directionY < 0)
+                // if ((player->ypos >= i->ypos+1) && ((player->xpos >= i->xpos-30) && (player->xpos < i->xpos+TILE_SIZE)))
+                //     { player->ypos = i->ypos + TILE_SIZE + 2; player->Yspeed = 0; }
         }
     }
+    player->GravitySpeed = 0.2;
 }
 
 
@@ -100,6 +108,7 @@ void Level::Update()
 
     player->Update();
     HorizontalCollisions();
+    VerticalCollisions();
 }
 
 

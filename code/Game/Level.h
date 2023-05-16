@@ -1,6 +1,7 @@
 #ifndef Level_h
 #define Level_h
 
+#include "../Helpers/Keyboard.h"
 #include "../Configs.h"
 #include <vector>
 
@@ -8,6 +9,7 @@ class Background;
 class Player;
 class Tile;
 class GameObject;
+class Keyboard;
 
 
 // Класс, отвечающий за логику игрового уровня.
@@ -25,6 +27,8 @@ class Level
         static vector<SDL_Rect*> movable_objects;
         // Переменная, задающая условия для перемещения объектов.
         static bool do_move_objects;
+        // Класс, для взаимодействия с клавиатурой.
+        static Keyboard kb;
     public:
         Level();
         ~Level();
