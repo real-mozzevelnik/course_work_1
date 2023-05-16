@@ -7,6 +7,7 @@ Player::Player(const char *texturesheet, int x, int y) : Entity(texturesheet, x,
     JumpSpeed = -10;
     GravitySpeed = 0.2;
     Yspeed = 0;
+    animation_frame_num = 0;
     // Задаем скорость.
     speed = PLAYER_SPEED;
     // Задаем начальное направляение игрока.
@@ -100,9 +101,9 @@ void Player::HandleInput()
 
     if (Level::kb.keystate[SDLK_SPACE])
     {
-            Jump();
-            directionY = -1;
-            inAir = true;
+        Jump();
+        directionY = -1;
+        inAir = true;
 
     }
     // Если действие - отпуск клавиши.
@@ -123,9 +124,42 @@ void Player::Gravity()
     if (Yspeed > 0) directionY = 1;
 }
 
+
 void Player::Jump()
 {
     Yspeed = JumpSpeed;
+}
+
+
+void Player::AnimatePlayer()
+{
+    float left_border, right_border;
+    animation_frame_num += ANIMATION_SPEED;
+    if (inAir)
+    {
+        left_border = 20;
+        right_border = 20;
+    }
+    else if ((directionX == 0) && (Yspeed < 2) && (Yspeed > -2))
+    {
+        left_border = 9;
+        right_border = 9;
+    }
+    else if ((directionX != 0) && (Yspeed < 2) && (Yspeed > -2))
+    {
+        left_border = 72;
+        right_border = 78;
+    }
+    else
+    {
+        left_border = 20;
+        right_border = 20;
+    }
+    if (animation_frame_num < left_border)
+        animation_frame_num = left_border;
+    if (animation_frame_num >= right_border)
+        animation_frame_num = left_border;
+    cout << int(animation_frame_num) << endl;
 }
 
 
@@ -137,6 +171,7 @@ void Player::Update()
     // Задаем координаты для прорисовки.
     destRect.x = xpos;
     destRect.y = ypos;
+    AnimatePlayer();
     // Отправляем в рендерер.
-    SDL_RenderCopy(Game::renderer, objTexture, &animation_frames[9], &destRect);
+    SDL_RenderCopy(Game::renderer, objTexture, &animation_frames[int(animation_frame_num)], &destRect);
 }

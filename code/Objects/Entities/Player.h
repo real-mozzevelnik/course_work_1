@@ -13,6 +13,7 @@ class Player: public Entity
         float GravitySpeed;
         float JumpSpeed;
         bool inAir;
+        float animation_frame_num;
     public:
         // Конструктор и деструктор.
         Player(const char *texturesheet, int x, int y);
@@ -23,6 +24,7 @@ class Player: public Entity
         void Update() override;
         void Gravity();
         void Jump();
+        void AnimatePlayer();
 
     private:
         // Считывание нажатий клавиш для взаимодействия с персонажем.

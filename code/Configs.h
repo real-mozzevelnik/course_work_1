@@ -14,6 +14,7 @@ using namespace std;
 #define RIGHT 0
 #define LEFT 1
 #define TILE_SIZE 64
+#define ANIMATION_SPEED 0.4
 
 #define FPS 120
 
