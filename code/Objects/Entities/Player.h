@@ -29,6 +29,7 @@ class Player: public Entity
     private:
         // Считывание нажатий клавиш для взаимодействия с персонажем.
         void HandleInput();
+        SDL_RendererFlip flip;
 };
 
 #endif

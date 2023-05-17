@@ -3,6 +3,7 @@
 
 Player::Player(const char *texturesheet, int x, int y) : Entity(texturesheet, x, y)
 {
+    flip = SDL_FLIP_NONE;
     directionX = directionY = 0;
     JumpSpeed = -10;
     GravitySpeed = 0.2;
@@ -31,50 +32,6 @@ void Player::Move()
         
 }
 
-
-// // Считывание нажатий клавиш для взаимодействия с персонажем.
-// void Player::HandleInput()
-// {
-//     // Если действие - нажатие клавиши.
-//     if (Game::event.type == SDL_KEYDOWN || inAir)
-//     {
-//         switch (Game::event.key.keysym.sym)
-//         {
-//         // Если клавиша "a" - персонаж идет влево.
-//         case SDLK_a:
-//             // Разрешаем двигать объекты.
-//             Level::do_move_objects = true;
-//             // Игрок смотрит налево.
-//             facing = LEFT;
-//             directionX = -PLAYER_SPEED;
-//             break;
-        
-//         // Если клавиша "d" - персонаж идет вправо.
-//         case SDLK_d:
-//             // Разрешаем двигать объекты.
-//             Level::do_move_objects = true;
-//             // Игрок смотрит направо.
-//             facing = RIGHT;
-//             directionX = PLAYER_SPEED;
-//             break;
-
-//         case SDLK_SPACE:
-//             Jump();
-//             directionY = -1;
-//             inAir = true;
-//             break;
-
-//         default:
-//             break;
-//         }
-//     }
-//     // Если действие - отпуск клавиши.
-//     if (Game::event.type == SDL_KEYUP)
-//     {
-//         directionX = 0;
-//         Level::do_move_objects = false;
-//     }
-// }
 
 // Считывание нажатий клавиш для взаимодействия с персонажем.
 void Player::HandleInput()
@@ -155,11 +112,16 @@ void Player::AnimatePlayer()
         left_border = 20;
         right_border = 20;
     }
+
+    if (facing == RIGHT)
+        flip = SDL_FLIP_NONE;
+    if (facing == LEFT)
+        flip = SDL_FLIP_HORIZONTAL;
+
     if (animation_frame_num < left_border)
         animation_frame_num = left_border;
     if (animation_frame_num >= right_border)
         animation_frame_num = left_border;
-    cout << int(animation_frame_num) << endl;
 }
 
 
@@ -173,5 +135,5 @@ void Player::Update()
     destRect.y = ypos;
     AnimatePlayer();
     // Отправляем в рендерер.
-    SDL_RenderCopy(Game::renderer, objTexture, &animation_frames[int(animation_frame_num)], &destRect);
+    SDL_RenderCopyEx(Game::renderer, objTexture, &animation_frames[int(animation_frame_num)], &destRect, 0, NULL, flip);
 }
