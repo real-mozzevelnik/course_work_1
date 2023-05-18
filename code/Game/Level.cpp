@@ -82,6 +82,9 @@ void Level::VerticalCollisions()
         }
     }
     player->GravitySpeed = 0.2;
+
+    if (player->ypos < 0)
+        { player->ypos = 0; player->Yspeed = 0; }
 }
 
 

@@ -91,11 +91,11 @@ void Game::HandleEvents()
         break;
 
     case SDL_KEYDOWN:
-        Level::kb.HandleKeyEvent(static_cast<int>(event.key.keysym.sym), 1);
+        Level::kb.HandleKeyEvent(static_cast<int>(event.key.keysym.sym % 350), 1);
         break;
 
     case SDL_KEYUP:
-        Level::kb.HandleKeyEvent(static_cast<int>(event.key.keysym.sym), 0);
+        Level::kb.HandleKeyEvent(static_cast<int>(event.key.keysym.sym % 350), 0);
     
     default:
         break;

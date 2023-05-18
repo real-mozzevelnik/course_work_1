@@ -13,12 +13,14 @@ class Entity: public GameObject
         int speed;
         // Скорость анимации.
         double animation_speed;
+        // Номер спрайта для анимации.
+        double animation_frame_num;
         // Области текстуры, с которых берутся кадры для анимации.
         vector<SDL_Rect> animation_frames;
-        // Кол-во кадров в анимации.
-        int frames_num;
         // Направление взгляда.
         int facing;
+        // Здоровье
+        int heal_points;
     public:
         // Конструктор.
         Entity(const char *texturesheet, int x, int y);

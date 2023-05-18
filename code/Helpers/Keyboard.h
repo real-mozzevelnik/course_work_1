@@ -6,7 +6,7 @@
 class Keyboard
 {
     public:
-        char keystate[200];
+        char keystate[350];
     public:
         Keyboard() {};
         ~Keyboard() {};

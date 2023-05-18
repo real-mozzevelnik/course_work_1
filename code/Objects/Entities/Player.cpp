@@ -15,8 +15,6 @@ Player::Player(const char *texturesheet, int x, int y) : Entity(texturesheet, x,
     facing = RIGHT;
     // Задаем скорость анимации.
     animation_speed = 0.2;
-    // Задаем кол-во спрайтов для анимации персонажа.
-    frames_num = 6;
 }
 
 Player::~Player()
@@ -100,7 +98,7 @@ void Player::AnimatePlayer()
     else if ((directionX == 0) && (Yspeed < 2) && (Yspeed > -2))
     {
         left_border = 9;
-        right_border = 9;
+        right_border = 17;
     }
     else if ((directionX != 0) && (Yspeed < 2) && (Yspeed > -2))
     {
