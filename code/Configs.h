@@ -11,6 +11,7 @@ using namespace std;
 #define BASIC_SIZE 32
 #define BASIC_ENTITY_SIZE 64
 #define PLAYER_SPEED 2
+#define ENEMY_SPEED 1
 #define RIGHT 0
 #define LEFT 1
 #define TILE_SIZE 64

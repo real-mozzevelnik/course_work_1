@@ -10,6 +10,7 @@ class Enemy: public Entity
     public:
         Enemy(vector<SDL_Texture*> animations, int x, int y);
         ~Enemy();
+        void Animate();
         void Update() override;
         void Move() override;
 };

@@ -44,10 +44,12 @@ vector<SDL_Rect> TextureManager::CutGraphics(SDL_Texture *texture, int size)
 vector<SDL_Texture*> TextureManager::LoadAnimationTextures(const char* path, int tex_num)
 {
     vector<SDL_Texture*> textures;
-    string filename = path;
-    filename += "0";
+    string filename;
     for (int i = 0; i < tex_num + 1; i++)
     {
+        filename = path;
+        if (i < 10)
+            filename += "0";
         filename += to_string(i);
         filename += ".png";
         textures.push_back(TextureManager::LaodTexture(filename.c_str()));

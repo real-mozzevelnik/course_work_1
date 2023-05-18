@@ -25,8 +25,8 @@ void Map::CreateMap()
 
     SDL_Texture* terrain_img = TextureManager::LaodTexture("../graphics/tiles/terrain_tiles/level_1.png");
     vector<SDL_Rect> terrain_rects = TextureManager::CutGraphics(terrain_img, TILE_SIZE);
-    vector<SDL_Texture*> enemy_lich_img = TextureManager::LoadAnimationTextures("../graphics/enemies/lich", 27);
-    vector<SDL_Texture*> enemy_ghost_img = TextureManager::LoadAnimationTextures("../graphics/enemies/ghost", 6);
+    vector<SDL_Texture*> enemy_lich_img = TextureManager::LoadAnimationTextures("../graphics/enemies/lich/", 27);
+    vector<SDL_Texture*> enemy_ghost_img = TextureManager::LoadAnimationTextures("../graphics/enemies/ghost/", 6);
 
 
 
@@ -63,8 +63,8 @@ void Map::CreateMap()
                 }
                 else if (style == "coins")
                 {
-                    Tile* tile = new Tile("../graphics/tiles/coin.png", x, y, {0,0,32,32});
-                    Level::coins.push_back(tile);
+                    Tile* coin = new Tile("../graphics/tiles/coin.png", x, y, {0,0,BASIC_SIZE,BASIC_SIZE});
+                    Level::coins.push_back(coin);
                 }
                 else if (style == "enemies")
                 {
@@ -74,7 +74,8 @@ void Map::CreateMap()
                 }
                 else if (style == "stoppers")
                 {
-                    // create stoppers
+                    Tile *stopper = new Tile("../graphics/stopper.png", x, y, {0,0,BASIC_SIZE,BASIC_SIZE});
+                    Level::enemy_stoppers.push_back(stopper);
                 }
                 else if (style == "player")
                 {

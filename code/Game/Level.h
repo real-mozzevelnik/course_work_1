@@ -25,7 +25,9 @@ class Level
         static vector<Tile*> tiles; 
         // Массив монет.
         static vector<Tile*> coins;
+        // Массив врагов.
         static vector<Enemy*> enemies;
+        static vector<Tile*> enemy_stoppers;
         // Массив объектов, с которыми игрок сталкивается.
         static vector<GameObject*> collidable_objects;
         // Массив объектов, которые будут передвигаться при движении игрока.
@@ -48,6 +50,8 @@ class Level
         void Update();
         // Передвижение объектов.
         void MoveObjects();
+        // Изменение движения врагов.
+        void TurnEnemiesDirection();
     private:
         // Скорость передвижения объектов.
         int objects_speed;

@@ -21,6 +21,8 @@ class Entity: public GameObject
         int facing;
         // Здоровье
         int heal_points;
+        // В какую сторону смотреть текстуре.
+        SDL_RendererFlip flip;
     public:
         // Конструктор.
         Entity(const char *texturesheet, int x, int y);

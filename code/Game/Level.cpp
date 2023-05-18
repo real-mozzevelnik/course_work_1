@@ -15,6 +15,7 @@ vector<GameObject*> Level::collidable_objects;
 vector<Tile*> Level::coins;
 Keyboard Level::kb;
 vector<Enemy*> Level::enemies;
+vector<Tile*> Level::enemy_stoppers;
 
 
 Level::Level()
@@ -38,7 +39,9 @@ Level::~Level()
     // Удаляем врагов.
     for (int i = 0; i < enemies.size(); i++)
         delete enemies[i];
-
+    // Удаляем стопперы.
+    for (int i = 0; i < enemy_stoppers.size(); i++)
+        delete enemy_stoppers[i];
 };
 
 
@@ -63,6 +66,7 @@ void Level::HorizontalCollisions()
         }
     }
 }
+
 
 void Level::VerticalCollisions()
 {
@@ -113,6 +117,22 @@ void Level::GetCoins()
 }
 
 
+void Level::TurnEnemiesDirection()
+{
+    for (auto& enemy : enemies)
+    {
+        for (auto& stopper : enemy_stoppers)
+        {
+            if (SDL_HasIntersection(&enemy->destRect, &stopper->destRect))
+            {
+                enemy->facing = !enemy->facing;
+                enemy->speed = -enemy->speed;
+            }
+        }
+    }
+}
+
+
 // Передвижение объектов.
 void Level::MoveObjects()
 {
@@ -144,6 +164,9 @@ void Level::Update()
     for (int i = 0; i < coins.size(); i++)
         coins[i]->Update();
 
+    for (int i = 0; i < enemy_stoppers.size(); i++)
+        enemy_stoppers[i]->Update();
+
     for (int i = 0; i < enemies.size(); i++)
         enemies[i]->Update();
 
@@ -151,6 +174,8 @@ void Level::Update()
     HorizontalCollisions();
     VerticalCollisions();
     GetCoins();
+    TurnEnemiesDirection();
+
 }
 
 
