@@ -10,6 +10,7 @@ class Player;
 class Tile;
 class GameObject;
 class Keyboard;
+class Enemy;
 
 
 // Класс, отвечающий за логику игрового уровня.
@@ -24,6 +25,7 @@ class Level
         static vector<Tile*> tiles; 
         // Массив монет.
         static vector<Tile*> coins;
+        static vector<Enemy*> enemies;
         // Массив объектов, с которыми игрок сталкивается.
         static vector<GameObject*> collidable_objects;
         // Массив объектов, которые будут передвигаться при движении игрока.

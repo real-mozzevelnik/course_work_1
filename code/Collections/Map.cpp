@@ -68,7 +68,9 @@ void Map::CreateMap()
                 }
                 else if (style == "enemies")
                 {
-                    // create enemy
+                    Enemy* enemy = new Enemy(enemy_lich_img, x, y);
+                    Level::movable_objects.push_back(&enemy->destRect);
+                    Level::enemies.push_back(enemy);
                 }
                 else if (style == "stoppers")
                 {

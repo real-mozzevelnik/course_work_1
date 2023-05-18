@@ -2,6 +2,7 @@
 #include "../Objects/StaticObjects/Background.h"
 #include "../Objects/Entities/Player.h"
 #include "../Objects/StaticObjects/Tile.h"
+#include "../Objects/Entities/Enemy.h"
 #include "../Collections/Map.h"
 
 // Объявляем статические переменные.
@@ -13,6 +14,7 @@ vector<Tile*> Level::tiles;
 vector<GameObject*> Level::collidable_objects;
 vector<Tile*> Level::coins;
 Keyboard Level::kb;
+vector<Enemy*> Level::enemies;
 
 
 Level::Level()
@@ -33,6 +35,9 @@ Level::~Level()
     // Удаляем монеты.
     for (int i = 0; i < coins.size(); i++)
         delete coins[i];
+    // Удаляем врагов.
+    for (int i = 0; i < enemies.size(); i++)
+        delete enemies[i];
 
 };
 
@@ -138,6 +143,9 @@ void Level::Update()
 
     for (int i = 0; i < coins.size(); i++)
         coins[i]->Update();
+
+    for (int i = 0; i < enemies.size(); i++)
+        enemies[i]->Update();
 
     player->Update();
     HorizontalCollisions();

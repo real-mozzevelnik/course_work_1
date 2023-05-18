@@ -4,8 +4,9 @@
 // Конструктор.
 GameObject::GameObject(const char *texturesheet, int x, int y)
 {
-    // Загружаем текстуру.
-    objTexture = TextureManager::LaodTexture(texturesheet);
+    if (texturesheet)
+        // Загружаем текстуру.
+        objTexture = TextureManager::LaodTexture(texturesheet);
 
     // Задаем координаты.
     destRect.x =  xpos = x;
