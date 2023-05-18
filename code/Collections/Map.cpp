@@ -6,6 +6,7 @@
 #include "../Game/Level.h"
 #include "../Objects/StaticObjects/Background.h"
 #include "../Objects/Entities/Player.h"
+#include "../Objects/Entities/Enemy.h"
 
 void Map::CreateMap()
 {
@@ -22,11 +23,15 @@ void Map::CreateMap()
         {"dialog", CsvParser::ParseCsv("../level/level_1_csv/dialog.csv")}
     };
 
-    // Загружаем фон.
-    Level::bg = new Background("../graphics/background/level_1.png", 0, TILE_SIZE);
     SDL_Texture* terrain_img = TextureManager::LaodTexture("../graphics/tiles/terrain_tiles/level_1.png");
     vector<SDL_Rect> terrain_rects = TextureManager::CutGraphics(terrain_img, TILE_SIZE);
+    vector<SDL_Texture*> enemy_lich_img = TextureManager::LoadAnimationTextures("../graphics/enemies/lich", 27);
+    vector<SDL_Texture*> enemy_ghost_img = TextureManager::LoadAnimationTextures("../graphics/enemies/ghost", 6);
 
+
+
+    // Загружаем фон.
+    Level::bg = new Background("../graphics/background/level_1.png", 0, TILE_SIZE);
     // Загружаем все объекты по слоям.
     for (const auto& [style, layout] : layouts)
     {

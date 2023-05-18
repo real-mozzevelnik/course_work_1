@@ -27,7 +27,6 @@ Player::~Player()
 void Player::Move()
 {
     HandleInput();
-        
 }
 
 

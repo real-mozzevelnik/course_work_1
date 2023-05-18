@@ -11,6 +11,7 @@ class TextureManager
         // Метод для загрузки текстуры, принимает имя загружаемого файла.
         static SDL_Texture* LaodTexture(const char *filename);
         static vector<SDL_Rect> CutGraphics(SDL_Texture *texture, int size);
+        static vector<SDL_Texture*> LoadAnimationTextures(const char* path, int tex_num);
 };
 
 #endif

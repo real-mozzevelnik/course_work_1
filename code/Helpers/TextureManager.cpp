@@ -1,5 +1,7 @@
 #include "TextureManager.h"
 
+#include <string>
+
 
 // Метод для загрузки текстуры, принимает имя загружаемого файла.
 SDL_Texture* TextureManager::LaodTexture(const char *filename)
@@ -36,4 +38,19 @@ vector<SDL_Rect> TextureManager::CutGraphics(SDL_Texture *texture, int size)
     }
 
     return cut_gr;
+}
+
+
+vector<SDL_Texture*> TextureManager::LoadAnimationTextures(const char* path, int tex_num)
+{
+    vector<SDL_Texture*> textures;
+    string filename = path;
+    filename += "0";
+    for (int i = 0; i < tex_num + 1; i++)
+    {
+        filename += to_string(i);
+        filename += ".png";
+        textures.push_back(TextureManager::LaodTexture(filename.c_str()));
+    }
+    return textures;
 }
