@@ -27,6 +27,9 @@ void Map::CreateMap()
     vector<SDL_Rect> terrain_rects = TextureManager::CutGraphics(terrain_img, TILE_SIZE);
     vector<SDL_Texture*> enemy_lich_img = TextureManager::LoadAnimationTextures("../graphics/enemies/lich/", 27);
     vector<SDL_Texture*> enemy_ghost_img = TextureManager::LoadAnimationTextures("../graphics/enemies/ghost/", 6);
+    vector<vector<SDL_Texture*>> enemies_imgs;
+    enemies_imgs.push_back(enemy_lich_img);
+    enemies_imgs.push_back(enemy_ghost_img);
 
 
 
@@ -68,7 +71,7 @@ void Map::CreateMap()
                 }
                 else if (style == "enemies")
                 {
-                    Enemy* enemy = new Enemy(enemy_lich_img, x, y);
+                    Enemy* enemy = new Enemy(enemies_imgs[col_index%2], x, y);
                     Level::movable_objects.push_back(&enemy->destRect);
                     Level::enemies.push_back(enemy);
                 }
