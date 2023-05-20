@@ -52,6 +52,8 @@ class Level
         void MoveObjects();
         // Изменение движения врагов.
         void TurnEnemiesDirection();
+        // Получение игроком урона.
+        void GetDamage();
     private:
         // Скорость передвижения объектов.
         int objects_speed;

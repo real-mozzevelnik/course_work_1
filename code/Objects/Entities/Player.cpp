@@ -9,6 +9,7 @@ Player::Player(const char *texturesheet, int x, int y) : Entity(texturesheet, x,
     GravitySpeed = 0.2;
     Yspeed = 0;
     animation_frame_num = 0;
+    heal_points = 100;
     // Задаем скорость.
     speed = PLAYER_SPEED;
     // Задаем начальное направляение игрока.

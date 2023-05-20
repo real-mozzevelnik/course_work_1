@@ -133,6 +133,23 @@ void Level::TurnEnemiesDirection()
 }
 
 
+void Level::GetDamage()
+{
+    for (auto& enemy : enemies)
+    {
+        if ((player->ypos >= enemy->ypos - 50) && (player->ypos <= enemy->ypos + 50))
+        {
+            if ((player->xpos >= enemy->xpos - 150) && (player->xpos <= enemy->xpos + 150))
+            {
+                if (enemy->Attack(player->xpos, player->ypos))
+                    player->heal_points -= 30;
+            }
+        }
+    }
+    cout << player->heal_points << endl;
+}
+
+
 // Передвижение объектов.
 void Level::MoveObjects()
 {
@@ -175,7 +192,7 @@ void Level::Update()
     VerticalCollisions();
     GetCoins();
     TurnEnemiesDirection();
-
+    GetDamage();
 }
 
 

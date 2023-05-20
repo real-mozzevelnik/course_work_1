@@ -9,6 +9,8 @@ Enemy::Enemy(vector<SDL_Texture*> animations, int x, int y) : Entity(nullptr, x,
     animation_frame_num = 0;
     srcRect = {0, 0, BASIC_SIZE, BASIC_SIZE};
     destRect.w = destRect.h = BASIC_ENTITY_SIZE;
+    attack_cooldown = 2000;
+    prev_attack_time = 0;
 }
 
 
@@ -34,6 +36,18 @@ void Enemy::Animate()
         flip = SDL_FLIP_NONE;
     else if (facing == LEFT)
         flip = SDL_FLIP_HORIZONTAL;
+}
+
+
+bool Enemy::Attack(int x, int y)
+{
+    if (SDL_GetTicks() - prev_attack_time > attack_cooldown)
+    {
+        prev_attack_time = SDL_GetTicks();
+        return true;
+    }
+
+    return false;
 }
 
 
