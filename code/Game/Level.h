@@ -12,6 +12,7 @@ class GameObject;
 class Keyboard;
 class Enemy;
 class ParticleEffects;
+class UI;
 
 
 // Класс, отвечающий за логику игрового уровня.
@@ -30,6 +31,7 @@ class Level
         static vector<Enemy*> enemies;
         // Массив объектов, разворачивающих врагов.
         static vector<Tile*> enemy_stoppers;
+        // Массив партиклов.
         static vector<ParticleEffects*> particles;
         // Массив объектов, с которыми игрок сталкивается.
         static vector<GameObject*> collidable_objects;
@@ -39,6 +41,7 @@ class Level
         static bool do_move_objects;
         // Класс, для взаимодействия с клавиатурой.
         static Keyboard kb;
+        static UI *ui;
     public:
         Level();
         ~Level();

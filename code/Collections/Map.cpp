@@ -7,6 +7,7 @@
 #include "../Objects/StaticObjects/Background.h"
 #include "../Objects/Entities/Player.h"
 #include "../Objects/Entities/Enemy.h"
+#include "../UI/UI.h"
 
 void Map::CreateMap()
 {
@@ -98,4 +99,5 @@ void Map::CreateMap()
         }
     }
     
+    Level::ui = new UI;
 }

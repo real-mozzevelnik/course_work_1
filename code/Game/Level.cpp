@@ -5,6 +5,7 @@
 #include "../Objects/Entities/Enemy.h"
 #include "../Collections/Map.h"
 #include "../Collections/ParticleEffects.h"
+#include "../UI/UI.h"
 
 // Объявляем статические переменные.
 vector<SDL_Rect*> Level::movable_objects;
@@ -18,6 +19,7 @@ Keyboard Level::kb;
 vector<Enemy*> Level::enemies;
 vector<Tile*> Level::enemy_stoppers;
 vector<ParticleEffects*> Level::particles;
+UI* Level::ui;
 
 
 Level::Level()
@@ -47,6 +49,8 @@ Level::~Level()
     // Удаляем эффекты.
     for (int i = 0; i < particles.size(); i++)
         delete particles[i];
+
+    delete ui;
 };
 
 
@@ -196,7 +200,6 @@ void Level::Update()
     for (int i = 0; i < enemies.size(); i++)
         enemies[i]->Update();
 
-
     player->Update();
 
 
@@ -215,6 +218,8 @@ void Level::Update()
 
         }
     }
+
+    ui->Update();
 
     HorizontalCollisions();
     VerticalCollisions();
