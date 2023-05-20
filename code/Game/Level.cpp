@@ -4,6 +4,7 @@
 #include "../Objects/StaticObjects/Tile.h"
 #include "../Objects/Entities/Enemy.h"
 #include "../Collections/Map.h"
+#include "../Collections/ParticleEffects.h"
 
 // Объявляем статические переменные.
 vector<SDL_Rect*> Level::movable_objects;
@@ -16,6 +17,7 @@ vector<Tile*> Level::coins;
 Keyboard Level::kb;
 vector<Enemy*> Level::enemies;
 vector<Tile*> Level::enemy_stoppers;
+vector<ParticleEffects*> Level::particles;
 
 
 Level::Level()
@@ -42,6 +44,9 @@ Level::~Level()
     // Удаляем стопперы.
     for (int i = 0; i < enemy_stoppers.size(); i++)
         delete enemy_stoppers[i];
+    // Удаляем эффекты.
+    for (int i = 0; i < particles.size(); i++)
+        delete particles[i];
 };
 
 
@@ -142,11 +147,15 @@ void Level::GetDamage()
             if ((player->xpos >= enemy->xpos - 150) && (player->xpos <= enemy->xpos + 150))
             {
                 if (enemy->Attack(player->xpos, player->ypos))
+                {
                     player->heal_points -= 30;
+                    ParticleEffects *p = new ParticleEffects("../graphics/particles/slash/", 4, player->xpos, player->ypos);
+                    particles.push_back(p);
+                    movable_objects.push_back(&p->destRect);
+                }
             }
         }
     }
-    cout << player->heal_points << endl;
 }
 
 
@@ -187,7 +196,26 @@ void Level::Update()
     for (int i = 0; i < enemies.size(); i++)
         enemies[i]->Update();
 
+
     player->Update();
+
+
+    for (int i = 0; i < particles.size(); i++)
+    {
+        if (!particles[i]->Update())
+        {
+            ParticleEffects *p = particles[i];
+            for (int j = 0; j < movable_objects.size(); j++)
+            {
+                if (movable_objects[j] == &particles[i]->destRect)
+                    movable_objects.erase(movable_objects.begin() + j);
+            }
+            particles.erase(particles.begin() + i);
+            delete p;
+
+        }
+    }
+
     HorizontalCollisions();
     VerticalCollisions();
     GetCoins();

@@ -45,7 +45,7 @@ vector<SDL_Texture*> TextureManager::LoadAnimationTextures(const char* path, int
 {
     vector<SDL_Texture*> textures;
     string filename;
-    for (int i = 0; i < tex_num + 1; i++)
+    for (int i = 0; i < tex_num; i++)
     {
         filename = path;
         if (i < 10)

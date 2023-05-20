@@ -11,6 +11,7 @@ class Tile;
 class GameObject;
 class Keyboard;
 class Enemy;
+class ParticleEffects;
 
 
 // Класс, отвечающий за логику игрового уровня.
@@ -27,7 +28,9 @@ class Level
         static vector<Tile*> coins;
         // Массив врагов.
         static vector<Enemy*> enemies;
+        // Массив объектов, разворачивающих врагов.
         static vector<Tile*> enemy_stoppers;
+        static vector<ParticleEffects*> particles;
         // Массив объектов, с которыми игрок сталкивается.
         static vector<GameObject*> collidable_objects;
         // Массив объектов, которые будут передвигаться при движении игрока.

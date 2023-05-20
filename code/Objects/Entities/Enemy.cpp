@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-Enemy::Enemy(vector<SDL_Texture*> animations, int x, int y) : Entity(nullptr, x, y)
+Enemy::Enemy(vector<SDL_Texture*> animations, int x, int y) : Entity("../graphics/tiles/coin.png", x, y)
 {
     facing = RIGHT;
     speed = ENEMY_SPEED;

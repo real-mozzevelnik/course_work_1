@@ -25,8 +25,8 @@ void Map::CreateMap()
 
     SDL_Texture* terrain_img = TextureManager::LaodTexture("../graphics/tiles/terrain_tiles/level_1.png");
     vector<SDL_Rect> terrain_rects = TextureManager::CutGraphics(terrain_img, TILE_SIZE);
-    vector<SDL_Texture*> enemy_lich_img = TextureManager::LoadAnimationTextures("../graphics/enemies/lich/", 27);
-    vector<SDL_Texture*> enemy_ghost_img = TextureManager::LoadAnimationTextures("../graphics/enemies/ghost/", 6);
+    vector<SDL_Texture*> enemy_lich_img = TextureManager::LoadAnimationTextures("../graphics/enemies/lich/", 28);
+    vector<SDL_Texture*> enemy_ghost_img = TextureManager::LoadAnimationTextures("../graphics/enemies/ghost/", 7);
     vector<vector<SDL_Texture*>> enemies_imgs;
     enemies_imgs.push_back(enemy_lich_img);
     enemies_imgs.push_back(enemy_ghost_img);
@@ -58,7 +58,9 @@ void Map::CreateMap()
                 }
                 else if (style == "box")
                 {
-                    // create box
+                    Tile* box = new Tile("../graphics/tiles/crate.png", x, y, {0,0,58,42});
+                    Level::tiles.push_back(box);
+                    Level::collidable_objects.push_back(static_cast<GameObject*>(box)); 
                 }
                 else if (style == "door")
                 {
