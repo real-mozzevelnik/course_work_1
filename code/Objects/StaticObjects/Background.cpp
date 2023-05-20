@@ -17,4 +17,6 @@ Background::Background(const char *texturesheet, int x, int y) : GameObject(text
     srcRect.w = destRect.w;
     srcRect.h = destRect.h;
 
+    destRect.h += TILE_SIZE;
+
 }

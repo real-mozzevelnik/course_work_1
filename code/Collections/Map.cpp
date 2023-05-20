@@ -31,7 +31,7 @@ void Map::CreateMap()
 
 
     // Загружаем фон.
-    Level::bg = new Background("../graphics/background/level_1.png", 0, TILE_SIZE);
+    Level::bg = new Background("../graphics/background/level_1.png", 0, 0);
     // Загружаем все объекты по слоям.
     for (const auto& [style, layout] : layouts)
     {
