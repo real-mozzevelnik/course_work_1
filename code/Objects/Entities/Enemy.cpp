@@ -16,7 +16,7 @@ Enemy::Enemy(vector<SDL_Texture*> animations, int x, int y) : Entity("../graphic
 
 Enemy::~Enemy()
 {
-    cout << "enemy dest" << endl;
+    TextureManager::DestroyAnimationTextures(animation_textures);
 }
 
 

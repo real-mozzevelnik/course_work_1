@@ -13,6 +13,7 @@ class Keyboard;
 class Enemy;
 class ParticleEffects;
 class UI;
+class Coin;
 
 
 // Класс, отвечающий за логику игрового уровня.
@@ -26,7 +27,7 @@ class Level
         // Тайлы.
         static vector<Tile*> tiles; 
         // Массив монет.
-        static vector<Tile*> coins;
+        static vector<Coin*> coins;
         // Массив врагов.
         static vector<Enemy*> enemies;
         // Массив объектов, разворачивающих врагов.

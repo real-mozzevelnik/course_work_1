@@ -6,6 +6,7 @@
 #include "../Collections/Map.h"
 #include "../Collections/ParticleEffects.h"
 #include "../UI/UI.h"
+#include "../Objects/StaticObjects/Coin.h"
 
 // Объявляем статические переменные.
 vector<SDL_Rect*> Level::movable_objects;
@@ -14,7 +15,7 @@ Background* Level::bg;
 Player* Level::player;
 vector<Tile*> Level::tiles;
 vector<GameObject*> Level::collidable_objects;
-vector<Tile*> Level::coins;
+vector<Coin*> Level::coins;
 Keyboard Level::kb;
 vector<Enemy*> Level::enemies;
 vector<Tile*> Level::enemy_stoppers;

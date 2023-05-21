@@ -12,7 +12,10 @@ ParticleEffects::ParticleEffects(const char* textures_path, int text_num, int x,
 }
 
 
-ParticleEffects::~ParticleEffects() { cout << "pe dest" << endl; }
+ParticleEffects::~ParticleEffects() 
+{
+    TextureManager::DestroyAnimationTextures(textures);
+}
 
 
 bool ParticleEffects::Update()

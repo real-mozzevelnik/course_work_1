@@ -20,5 +20,4 @@ void GameObject::Update()
     ypos = destRect.y;
     // Добавляем объект в буфер рендерера.
     SDL_RenderCopy(Game::renderer, objTexture, &srcRect, &destRect);
-    cout << SDL_GetError() << endl;
 }

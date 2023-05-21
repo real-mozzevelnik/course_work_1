@@ -8,6 +8,7 @@
 #include "../Objects/Entities/Player.h"
 #include "../Objects/Entities/Enemy.h"
 #include "../UI/UI.h"
+#include "../Objects/StaticObjects/Coin.h"
 
 void Map::CreateMap()
 {
@@ -71,7 +72,7 @@ void Map::CreateMap()
                 }
                 else if (style == "coins")
                 {
-                    Tile* coin = new Tile("../graphics/tiles/coin.png", x, y, {0,0,BASIC_SIZE,BASIC_SIZE});
+                    Coin* coin = new Coin(x, y);
                     Level::coins.push_back(coin);
                     Level::movable_objects.push_back(&coin->destRect);
                 }

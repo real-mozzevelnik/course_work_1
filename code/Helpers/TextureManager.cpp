@@ -56,3 +56,10 @@ vector<SDL_Texture*> TextureManager::LoadAnimationTextures(const char* path, int
     }
     return textures;
 }
+
+
+void TextureManager::DestroyAnimationTextures(vector<SDL_Texture*> texs)
+{
+    for (int i = 0; i < texs.size(); i++)
+        SDL_DestroyTexture(texs[i]);
+}
