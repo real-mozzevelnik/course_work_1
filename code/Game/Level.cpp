@@ -101,8 +101,8 @@ void Level::VerticalCollisions()
     }
     player->GravitySpeed = 0.2;
 
-    if (player->ypos < 0)
-        { player->ypos = 0; player->Yspeed = 0; }
+    if (player->ypos+20 < 0)
+        { player->ypos = -20; player->Yspeed = 0; }
 }
 
 

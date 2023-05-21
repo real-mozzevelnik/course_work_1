@@ -16,6 +16,7 @@ using namespace std;
 #define LEFT 1
 #define TILE_SIZE 64
 #define ANIMATION_SPEED 0.1
+#define HEALTH_BAR_WIDTH 156
 
 #define FPS 120
 
