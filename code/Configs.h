@@ -20,6 +20,7 @@ using namespace std;
 #define HEALTH_BAR_WIDTH 156
 #define WHITE {255, 255, 255}
 #define RED {180, 0, 0}
+#define ENEMY_ATTACK_RADIUS 90
 
 #define FPS 120
 

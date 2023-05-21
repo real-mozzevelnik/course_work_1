@@ -51,6 +51,8 @@ void UI::Update()
     SDL_RenderCopy(Game::renderer, coin, &coin_srcRect, &coin_destRect);
 
     health_destRect.w = static_cast<int>((Level::player->heal_points / 100.)*HEALTH_BAR_WIDTH);
+    if (health_destRect.w < 0)
+        health_destRect.w = 0;
     SDL_RenderCopy(Game::renderer, health_bar, &health_bar_srcRect, &health_bar_destRect);
     SDL_RenderFillRect(Game::renderer, &health_destRect);
 }

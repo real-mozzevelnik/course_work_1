@@ -150,7 +150,7 @@ void Level::GetDamage()
     {
         if ((player->ypos >= enemy->ypos - 50) && (player->ypos <= enemy->ypos + 50))
         {
-            if ((player->xpos >= enemy->xpos - 150) && (player->xpos <= enemy->xpos + 150))
+            if ((player->xpos >= enemy->xpos - ENEMY_ATTACK_RADIUS) && (player->xpos <= enemy->xpos + ENEMY_ATTACK_RADIUS))
             {
                 if (enemy->Attack(player->xpos, player->ypos))
                 {
