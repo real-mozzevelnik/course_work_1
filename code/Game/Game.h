@@ -20,6 +20,8 @@ class Game
         static SDL_Event event;
         // Указатель на уровень.
         Level *level;
+        // Количество собранных монет.
+        static int total_coins_earned;
 
     public:
         // Конструктор, в который передаются основные характеристики игрового окна.

@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <iostream>
 using namespace std;
 
@@ -17,6 +18,8 @@ using namespace std;
 #define TILE_SIZE 64
 #define ANIMATION_SPEED 0.1
 #define HEALTH_BAR_WIDTH 156
+#define WHITE {255, 255, 255}
+#define RED {180, 0, 0}
 
 #define FPS 120
 

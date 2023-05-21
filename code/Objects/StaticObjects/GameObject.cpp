@@ -5,7 +5,7 @@
 GameObject::GameObject(const char *texturesheet, int x, int y)
 {
     // Загружаем текстуру.
-    objTexture = TextureManager::LaodTexture(texturesheet);
+    objTexture = TextureManager::LoadTexture(texturesheet);
 
     // Задаем координаты.
     destRect.x =  xpos = x;
@@ -20,4 +20,5 @@ void GameObject::Update()
     ypos = destRect.y;
     // Добавляем объект в буфер рендерера.
     SDL_RenderCopy(Game::renderer, objTexture, &srcRect, &destRect);
+    cout << SDL_GetError() << endl;
 }

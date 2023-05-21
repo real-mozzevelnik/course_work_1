@@ -24,7 +24,7 @@ void Map::CreateMap()
         {"dialog", CsvParser::ParseCsv("../level/level_1_csv/dialog.csv")}
     };
 
-    SDL_Texture* terrain_img = TextureManager::LaodTexture("../graphics/tiles/terrain_tiles/level_1.png");
+    SDL_Texture* terrain_img = TextureManager::LoadTexture("../graphics/tiles/terrain_tiles/level_1.png");
     vector<SDL_Rect> terrain_rects = TextureManager::CutGraphics(terrain_img, TILE_SIZE);
     vector<SDL_Texture*> enemy_lich_img = TextureManager::LoadAnimationTextures("../graphics/enemies/lich/", 28);
     vector<SDL_Texture*> enemy_ghost_img = TextureManager::LoadAnimationTextures("../graphics/enemies/ghost/", 7);
@@ -56,12 +56,14 @@ void Map::CreateMap()
                     Tile* tile = new Tile("../graphics/tiles/terrain_tiles/level_1.png", x, y, terrain_rects[layout[row_index][col_index]]);
                     Level::tiles.push_back(tile);
                     Level::collidable_objects.push_back(static_cast<GameObject*>(tile));
+                    Level::movable_objects.push_back(&tile->destRect);
                 }
                 else if (style == "box")
                 {
                     Tile* box = new Tile("../graphics/tiles/crate.png", x, y, {0,0,58,42});
                     Level::tiles.push_back(box);
                     Level::collidable_objects.push_back(static_cast<GameObject*>(box)); 
+                    Level::movable_objects.push_back(&box->destRect);
                 }
                 else if (style == "door")
                 {
@@ -71,6 +73,7 @@ void Map::CreateMap()
                 {
                     Tile* coin = new Tile("../graphics/tiles/coin.png", x, y, {0,0,BASIC_SIZE,BASIC_SIZE});
                     Level::coins.push_back(coin);
+                    Level::movable_objects.push_back(&coin->destRect);
                 }
                 else if (style == "enemies")
                 {
@@ -82,6 +85,7 @@ void Map::CreateMap()
                 {
                     Tile *stopper = new Tile("../graphics/stopper.png", x, y, {0,0,BASIC_SIZE,BASIC_SIZE});
                     Level::enemy_stoppers.push_back(stopper);
+                    Level::movable_objects.push_back(&stopper->destRect);
                 }
                 else if (style == "player")
                 {

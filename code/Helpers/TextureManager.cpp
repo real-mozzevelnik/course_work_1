@@ -4,7 +4,7 @@
 
 
 // Метод для загрузки текстуры, принимает имя загружаемого файла.
-SDL_Texture* TextureManager::LaodTexture(const char *filename)
+SDL_Texture* TextureManager::LoadTexture(const char *filename)
 {
     // Загружаем изображение как поверхность.
     SDL_Surface *tempSurface = IMG_Load(filename);
@@ -52,7 +52,7 @@ vector<SDL_Texture*> TextureManager::LoadAnimationTextures(const char* path, int
             filename += "0";
         filename += to_string(i);
         filename += ".png";
-        textures.push_back(TextureManager::LaodTexture(filename.c_str()));
+        textures.push_back(TextureManager::LoadTexture(filename.c_str()));
     }
     return textures;
 }

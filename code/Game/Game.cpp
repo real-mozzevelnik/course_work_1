@@ -5,6 +5,7 @@
 SDL_Renderer* Game::renderer = nullptr;
 string Game::state;
 int Game::level_num = 0;
+int Game::total_coins_earned = 0;
 SDL_Event Game::event;
 
 
@@ -20,8 +21,10 @@ Game::Game(const char* title, int xpos, int ypos, int width, int heigth, bool fu
     // Инициализация SDL.
     if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
     {
+        TTF_Init();
         cout << "Init success" << endl;
         atexit(SDL_Quit);
+        atexit(TTF_Quit);
 
         // Создаем окно.
         window = SDL_CreateWindow(title, xpos, ypos, width, heigth, flags);
