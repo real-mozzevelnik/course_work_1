@@ -16,6 +16,8 @@ Player::Player(const char *texturesheet, int x, int y) : Entity(texturesheet, x,
     facing = RIGHT;
     // Задаем скорость анимации.
     animation_speed = 0.2;
+    for (int i = 0; i < animation_frames.size(); i++)
+        animation_frames[i].h -= 10;
 }
 
 Player::~Player()

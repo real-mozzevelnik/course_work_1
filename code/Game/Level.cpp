@@ -63,13 +63,13 @@ void Level::HorizontalCollisions()
         {
             if (player->directionX > 0) 
             {
-                if ((player->xpos+BASIC_ENTITY_SIZE > i->xpos) && (player->ypos >= i->ypos))
-                    { player->xpos = i->xpos-TILE_SIZE - 2; player->directionX = 0;}
+                if ((player->xpos+BASIC_ENTITY_SIZE >= i->xpos) && (player->ypos >= i->ypos) && (player->xpos+BASIC_ENTITY_SIZE <= i->xpos+TILE_SIZE))
+                    { player->xpos = i->xpos-TILE_SIZE ; player->directionX = 0;}
             }
             if (player->directionX < 0)
             {   
-                if ((player->xpos < i->xpos+TILE_SIZE) && (player->ypos >= i->ypos))
-                    { player->xpos = i->xpos+TILE_SIZE + 2; player->directionX = 0; }
+                if ((player->xpos <= i->xpos+TILE_SIZE) && (player->ypos >= i->ypos) && (player->xpos >= i->xpos))
+                    { player->xpos = i->xpos+TILE_SIZE; player->directionX = 0; }
             }
             
         }
