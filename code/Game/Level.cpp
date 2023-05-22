@@ -115,6 +115,7 @@ void Level::GetCoins()
         if (SDL_HasIntersection(&player->destRect, &coins[i]->destRect))
         {
             Game::total_coins_earned++;
+            ui->UpdateCoinsNum();
             tmp_tile = coins[i];
             coins.erase(coins.begin() + i);
             for (int j = 0; j < movable_objects.size(); j++)

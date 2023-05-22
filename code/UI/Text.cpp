@@ -7,6 +7,7 @@ Text::Text(const char* text, SDL_Color color, SDL_Rect destRect)
     SDL_Surface* message_surf = TTF_RenderText_Solid(font, text, color);
     message_tex = SDL_CreateTextureFromSurface(Game::renderer, message_surf);
     SDL_FreeSurface(message_surf);
+    TTF_CloseFont(font);
 }
 
 

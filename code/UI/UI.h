@@ -17,6 +17,7 @@ class UI
         UI();
         ~UI();
         void Update();
+        void UpdateCoinsNum();
 };
 
 #endif
