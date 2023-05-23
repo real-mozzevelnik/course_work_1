@@ -52,6 +52,7 @@
         "climits": "cpp",
         "fstream": "cpp",
         "map": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "format": "cpp"
     }
 }

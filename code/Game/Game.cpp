@@ -4,7 +4,7 @@
 // Объявляем static поля класса.
 SDL_Renderer* Game::renderer = nullptr;
 string Game::state;
-int Game::level_num = 0;
+int Game::level_num = 1;
 int Game::total_coins_earned = 0;
 SDL_Event Game::event;
 
@@ -19,39 +19,48 @@ Game::Game(const char* title, int xpos, int ypos, int width, int heigth, bool fu
     else flags = SDL_WINDOW_SHOWN;
 
     // Инициализация SDL.
-    if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
-        TTF_Init();
-        cout << "Init success" << endl;
-        atexit(SDL_Quit);
-        atexit(TTF_Quit);
-
-        // Создаем окно.
-        window = SDL_CreateWindow(title, xpos, ypos, width, heigth, flags);
-        if (window)
-        {
-            cout << "Window success" << endl;
-        }
-
-        // Создаем рендерер.
-        renderer = SDL_CreateRenderer(window, -1, 0);
-        if (renderer)
-        {
-            // Заполняем фон черным.
-            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-            cout << "Renderer success" << endl;
-        }
-        // Начинаем игровой цикл.
-        isRunning = true;
-
-        // Состояние игры в начале - меню.
-        state = "Menu";
-        // Номер уровня в начале игры - 0.
-        level_num = 0;
-        // Создаем уровень.
-        level = new Level();
+        cout << "SDL INIT ERROR: " << SDL_GetError() << endl;
+        exit(EXIT_FAILURE);
     }
-    else isRunning = false;
+    // При завершении программы очистить ресурсы, выделенные SDL.
+    atexit(SDL_Quit);
+    
+    // Инициализация TTF.
+    if (TTF_Init() != 0)
+    {
+        cout << "TTF INIT ERROR: " << SDL_GetError() << endl;
+        exit(EXIT_FAILURE);
+    }
+    // При завершении программы очистить ресурсы, выделенные TTF.
+    atexit(TTF_Quit);
+
+    // Создаем окно.
+    window = SDL_CreateWindow(title, xpos, ypos, width, heigth, flags);
+    if (!window)
+    {
+        cout << "WINDOW CREATION ERROR: " << SDL_GetError() << endl;
+        exit(EXIT_FAILURE);
+    }
+
+    // Создаем рендерер.
+    renderer = SDL_CreateRenderer(window, -1, 0);
+    if (!renderer)
+    {
+        cout << "RENDERER CREATION ERROR: " << SDL_GetError() << endl;
+        exit(EXIT_FAILURE);
+    }
+
+    // Начинаем игровой цикл.
+    isRunning = true;
+
+    // Состояние игры в начале - меню.
+    state = "Menu";
+    // Номер уровня в начале игры - 0.
+    level_num = 2;
+    // Создаем уровень.
+    level = new Level();
 }
 
 
@@ -127,7 +136,7 @@ void Game::CheckState()
 // Запуск игры.
 void Game::Run()
 {
-    // Нужное кол-во fps - 60.
+    // Нужное кол-во FPS.
     const int frameDelay = 1000 / FPS;
 
     Uint32 frameStart;

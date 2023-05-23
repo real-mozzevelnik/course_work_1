@@ -1,5 +1,6 @@
 #include "Map.h"
 #include <map>
+#include <sstream>
 
 #include "../Helpers/CsvParser.h"
 #include "../Objects/StaticObjects/Tile.h"
@@ -12,20 +13,31 @@
 
 void Map::CreateMap()
 {
+    string path;
+    stringstream ss;
+    
+    ss << "../level/level_" << Game::level_num << "_csv/";
+    path = ss.str();
+    ss.str(string());
+    ss.clear();
+
     // Загружаем все слои карты.
     map<string, vector<vector<int>>> layouts {
-        {"terrain", CsvParser::ParseCsv("../level/level_1_csv/terrain.csv")},
-        {"box", CsvParser::ParseCsv("../level/level_1_csv/box.csv")},
-        {"door", CsvParser::ParseCsv("../level/level_1_csv/door.csv")},
-        {"coins", CsvParser::ParseCsv("../level/level_1_csv/coins.csv")},
-        {"enemies", CsvParser::ParseCsv("../level/level_1_csv/enemies.csv")},
-        {"stoppers", CsvParser::ParseCsv("../level/level_1_csv/stoppers.csv")},
-        {"player", CsvParser::ParseCsv("../level/level_1_csv/player.csv")},
-        {"grass", CsvParser::ParseCsv("../level/level_1_csv/grass.csv")},
-        {"dialog", CsvParser::ParseCsv("../level/level_1_csv/dialog.csv")}
+        {"terrain", CsvParser::ParseCsv((path+"terrain.csv").c_str())},
+        {"box", CsvParser::ParseCsv((path+"box.csv").c_str())},
+        {"door", CsvParser::ParseCsv((path+"door.csv").c_str())},
+        {"coins", CsvParser::ParseCsv((path+"coins.csv").c_str())},
+        {"enemies", CsvParser::ParseCsv((path+"enemies.csv").c_str())},
+        {"stoppers", CsvParser::ParseCsv((path+"stoppers.csv").c_str())},
+        {"player", CsvParser::ParseCsv((path+"player.csv").c_str())}
     };
 
-    SDL_Texture* terrain_img = TextureManager::LoadTexture("../graphics/tiles/terrain_tiles/level_1.png");
+
+    ss << "../graphics/tiles/terrain_tiles/level_" << Game::level_num << ".png";
+    path = ss.str();
+    ss.str(string());
+    ss.clear();
+    SDL_Texture* terrain_img = TextureManager::LoadTexture(path.c_str());
     vector<SDL_Rect> terrain_rects = TextureManager::CutGraphics(terrain_img, TILE_SIZE);
     vector<SDL_Texture*> enemy_lich_img = TextureManager::LoadAnimationTextures("../graphics/enemies/lich/", 28);
     vector<SDL_Texture*> enemy_ghost_img = TextureManager::LoadAnimationTextures("../graphics/enemies/ghost/", 7);
@@ -36,7 +48,11 @@ void Map::CreateMap()
 
 
     // Загружаем фон.
-    Level::bg = new Background("../graphics/background/level_1.png", 0, 0);
+    ss << "../graphics/background/level_" << Game::level_num << ".png";
+    path = ss.str();
+    ss.str(string());
+    ss.clear();
+    Level::bg = new Background(path.c_str(), 0, 0);
     // Загружаем все объекты по слоям.
     for (const auto& [style, layout] : layouts)
     {
@@ -54,6 +70,10 @@ void Map::CreateMap()
 
                 if (style == "terrain")
                 {
+                    // ss << "../graphics/tiles/terrain_tiles/level_" << Game::level_num << ".png";
+                    // path = ss.str();
+                    // ss.str(string());
+                    // ss.clear();
                     Tile* tile = new Tile("../graphics/tiles/terrain_tiles/level_1.png", x, y, terrain_rects[layout[row_index][col_index]]);
                     Level::tiles.push_back(tile);
                     Level::collidable_objects.push_back(static_cast<GameObject*>(tile));
@@ -91,14 +111,6 @@ void Map::CreateMap()
                 else if (style == "player")
                 {
                     Level::player = new Player("../graphics/charlieTheCapybaraAnimationSheet.png", x, y);
-                }
-                else if (style == "grass")
-                {
-                    // create grass
-                }
-                else if (style == "dialog")
-                {
-                    // create dialog
                 }
             }
         }
