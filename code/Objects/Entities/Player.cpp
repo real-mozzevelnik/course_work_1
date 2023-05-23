@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "../../Game/Level.h"
 
-Player::Player(const char *texturesheet, int x, int y) : Entity(texturesheet, x, y)
+Player::Player(SDL_Texture* tex, int x, int y) : Entity(tex, x, y)
 {
     flip = SDL_FLIP_NONE;
     directionX = directionY = 0;

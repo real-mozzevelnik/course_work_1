@@ -1,6 +1,6 @@
 #include "Tile.h"
 
-Tile::Tile(const char *texturesheet, int x, int y, SDL_Rect tex_num) : GameObject(texturesheet, x, y)
+Tile::Tile(SDL_Texture* tex, int x, int y, SDL_Rect tex_num) : GameObject(tex, x, y)
 {
     destRect.w = TILE_SIZE;
     destRect.h = TILE_SIZE;

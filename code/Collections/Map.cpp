@@ -11,6 +11,15 @@
 #include "../UI/UI.h"
 #include "../Objects/StaticObjects/Coin.h"
 
+
+SDL_Texture* Map::terrain_img;
+SDL_Texture* Map::box_img;
+SDL_Texture* Map::coin_img;
+SDL_Texture* Map::stopper_img;
+SDL_Texture* Map::player_img;
+SDL_Texture* Map::bg_img;
+
+
 void Map::CreateMap()
 {
     string path;
@@ -37,7 +46,21 @@ void Map::CreateMap()
     path = ss.str();
     ss.str(string());
     ss.clear();
-    SDL_Texture* terrain_img = TextureManager::LoadTexture(path.c_str());
+    // Загружаем некоторые изображения.
+    terrain_img = TextureManager::LoadTexture(path.c_str());
+    box_img = TextureManager::LoadTexture("../graphics/tiles/crate.png");
+    coin_img = TextureManager::LoadTexture("../graphics/tiles/coin.png");
+    stopper_img = TextureManager::LoadTexture("../graphics/stopper.png");
+    player_img = TextureManager::LoadTexture("../graphics/charlieTheCapybaraAnimationSheet.png");
+
+    ss << "../graphics/background/level_" << Game::level_num << ".png";
+    path = ss.str();
+    ss.str(string());
+    ss.clear();
+    bg_img = TextureManager::LoadTexture(path.c_str());
+
+
+    // 
     vector<SDL_Rect> terrain_rects = TextureManager::CutGraphics(terrain_img, TILE_SIZE);
     vector<SDL_Texture*> enemy_lich_img = TextureManager::LoadAnimationTextures("../graphics/enemies/lich/", 28);
     vector<SDL_Texture*> enemy_ghost_img = TextureManager::LoadAnimationTextures("../graphics/enemies/ghost/", 7);
@@ -48,11 +71,7 @@ void Map::CreateMap()
 
 
     // Загружаем фон.
-    ss << "../graphics/background/level_" << Game::level_num << ".png";
-    path = ss.str();
-    ss.str(string());
-    ss.clear();
-    Level::bg = new Background(path.c_str(), 0, 0);
+    Level::bg = new Background(bg_img, 0, 0);
     // Загружаем все объекты по слоям.
     for (const auto& [style, layout] : layouts)
     {
@@ -70,18 +89,14 @@ void Map::CreateMap()
 
                 if (style == "terrain")
                 {
-                    // ss << "../graphics/tiles/terrain_tiles/level_" << Game::level_num << ".png";
-                    // path = ss.str();
-                    // ss.str(string());
-                    // ss.clear();
-                    Tile* tile = new Tile("../graphics/tiles/terrain_tiles/level_1.png", x, y, terrain_rects[layout[row_index][col_index]]);
+                    Tile* tile = new Tile(terrain_img, x, y, terrain_rects[layout[row_index][col_index]]);
                     Level::tiles.push_back(tile);
                     Level::collidable_objects.push_back(static_cast<GameObject*>(tile));
                     Level::movable_objects.push_back(&tile->destRect);
                 }
                 else if (style == "box")
                 {
-                    Tile* box = new Tile("../graphics/tiles/crate.png", x, y, {0,0,58,42});
+                    Tile* box = new Tile(box_img, x, y, {0,0,58,42});
                     Level::tiles.push_back(box);
                     Level::collidable_objects.push_back(static_cast<GameObject*>(box)); 
                     Level::movable_objects.push_back(&box->destRect);
@@ -92,7 +107,7 @@ void Map::CreateMap()
                 }
                 else if (style == "coins")
                 {
-                    Coin* coin = new Coin(x, y);
+                    Coin* coin = new Coin(coin_img, x, y);
                     Level::coins.push_back(coin);
                     Level::movable_objects.push_back(&coin->destRect);
                 }
@@ -104,17 +119,28 @@ void Map::CreateMap()
                 }
                 else if (style == "stoppers")
                 {
-                    Tile *stopper = new Tile("../graphics/stopper.png", x, y, {0,0,BASIC_SIZE,BASIC_SIZE});
+                    Tile *stopper = new Tile(stopper_img, x, y, {0,0,BASIC_SIZE,BASIC_SIZE});
                     Level::enemy_stoppers.push_back(stopper);
                     Level::movable_objects.push_back(&stopper->destRect);
                 }
                 else if (style == "player")
                 {
-                    Level::player = new Player("../graphics/charlieTheCapybaraAnimationSheet.png", x, y);
+                    Level::player = new Player(player_img, x, y);
                 }
             }
         }
     }
     
     Level::ui = new UI;
+}
+
+
+void Map::DestroyTextures()
+{
+    SDL_DestroyTexture(terrain_img);
+    SDL_DestroyTexture(box_img);
+    SDL_DestroyTexture(coin_img);
+    SDL_DestroyTexture(player_img);
+    SDL_DestroyTexture(stopper_img);
+    SDL_DestroyTexture(bg_img);
 }

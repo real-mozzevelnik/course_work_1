@@ -31,6 +31,7 @@ Level::Level()
 
 Level::~Level()
 {
+    Map::DestroyTextures();
     // Удаляем задний фон.
     delete bg;
     // Удаляем игрока.

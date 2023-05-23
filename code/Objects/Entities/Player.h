@@ -15,7 +15,7 @@ class Player: public Entity
         bool inAir;
     public:
         // Конструктор и деструктор.
-        Player(const char *texturesheet, int x, int y);
+        Player(SDL_Texture* tex, int x, int y);
         ~Player();
         // Передивжение игрока.
         void Move() override;

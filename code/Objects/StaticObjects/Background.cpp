@@ -3,7 +3,7 @@
 
 
 // Конструктор, также вызываем конструктор базового класса.
-Background::Background(const char *texturesheet, int x, int y) : GameObject(texturesheet, x, y)
+Background::Background(SDL_Texture* tex, int x, int y) : GameObject(tex, x, y)
 {
     // Добавляем фон в передвигаемые объекты.
     Level::movable_objects.push_back(&destRect);

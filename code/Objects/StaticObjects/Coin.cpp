@@ -2,7 +2,7 @@
 
 #include "../../Helpers/TextureManager.h"
 
-Coin::Coin(int x, int y) : Tile("../graphics/tiles/coin.png", x, y, {0,0,32,32})
+Coin::Coin(SDL_Texture* tex, int x, int y) : Tile(tex, x, y, {0,0,32,32})
 {
     animation_textures = TextureManager::LoadAnimationTextures("../graphics/tiles/silver/", 4);
     animation_frame_num = 0;

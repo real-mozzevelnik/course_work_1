@@ -9,7 +9,7 @@
 class Background: public GameObject
 {
     public:
-        Background(const char *texturesheet, int x, int y);
+        Background(SDL_Texture* tex, int x, int y);
         ~Background() {cout << "Background destructor" << endl; };
 };
 

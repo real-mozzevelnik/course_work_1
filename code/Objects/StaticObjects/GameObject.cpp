@@ -2,10 +2,10 @@
 
 
 // Конструктор.
-GameObject::GameObject(const char *texturesheet, int x, int y)
+GameObject::GameObject(SDL_Texture* tex, int x, int y)
 {
     // Загружаем текстуру.
-    objTexture = TextureManager::LoadTexture(texturesheet);
+    objTexture = tex;
 
     // Задаем координаты.
     destRect.x =  xpos = x;

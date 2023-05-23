@@ -25,7 +25,7 @@ class Entity: public GameObject
         SDL_RendererFlip flip;
     public:
         // Конструктор.
-        Entity(const char *texturesheet, int x, int y);
+        Entity(SDL_Texture* tex, int x, int y);
         virtual ~Entity() {};
         // Передвижение юнита.
         virtual void Move() = 0;

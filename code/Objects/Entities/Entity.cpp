@@ -1,7 +1,7 @@
 #include "Entity.h"
 
 // Конструктор.
-Entity::Entity(const char *texturesheet, int x, int y) : GameObject(texturesheet, x, y)
+Entity::Entity(SDL_Texture* tex, int x, int y) : GameObject(tex, x, y)
 {
     // Задаем размеры объекта.
     destRect.w = srcRect.w = BASIC_ENTITY_SIZE;

@@ -9,9 +9,9 @@ class GameObject
 {
     public:
         // Конструктор, принимает путь к файлу с изображением объекта, начальные координаты.
-        GameObject(const char *texturesheet, int x, int y);
+        GameObject(SDL_Texture* tex, int x, int y);
         // Вирутальный деструктор, дабы вызывались деструкторы наследников.
-        virtual ~GameObject() {SDL_DestroyTexture(objTexture);};
+        virtual ~GameObject() {};
 
         // Обновление объекта.
         virtual void Update();

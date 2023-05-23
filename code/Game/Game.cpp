@@ -58,7 +58,7 @@ Game::Game(const char* title, int xpos, int ypos, int width, int heigth, bool fu
     // Состояние игры в начале - меню.
     state = "Menu";
     // Номер уровня в начале игры - 0.
-    level_num = 2;
+    level_num = 4;
     // Создаем уровень.
     level = new Level();
 }
