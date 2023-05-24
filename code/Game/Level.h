@@ -42,6 +42,7 @@ class Level
         static bool do_move_objects;
         // Класс, для взаимодействия с клавиатурой.
         static Keyboard kb;
+        // Интерфейс.
         static UI *ui;
     public:
         Level();

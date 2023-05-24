@@ -31,6 +31,7 @@ Level::Level()
 
 Level::~Level()
 {
+    // Удаляем все текстуры.
     Map::DestroyTextures();
     // Удаляем задний фон.
     delete bg;
@@ -67,16 +68,22 @@ Level::~Level()
 
 void Level::HorizontalCollisions()
 {
+    // Перемещаем игрока.
     player->xpos += player->directionX;
+
+    // Если игрок соприкасается с объектами - перемещаем игрока на определенное расстояние
+    // от объекта.
     for (auto& i : collidable_objects)
     {
         if (SDL_HasIntersection(&player->destRect, &i->destRect))
         {
+            // Игрок идет вправо.
             if (player->directionX > 0) 
             {
                 if ((player->xpos+BASIC_ENTITY_SIZE >= i->xpos) && (player->ypos >= i->ypos) && (player->xpos+BASIC_ENTITY_SIZE <= i->xpos+TILE_SIZE))
                     { player->xpos = i->xpos-TILE_SIZE ; player->directionX = 0;}
             }
+            // Игрок идет влево.
             if (player->directionX < 0)
             {   
                 if ((player->xpos <= i->xpos+TILE_SIZE) && (player->ypos >= i->ypos) && (player->xpos >= i->xpos))
@@ -90,11 +97,16 @@ void Level::HorizontalCollisions()
 
 void Level::VerticalCollisions()
 {
+    // Применяем гравитацию к игроку.
     player->Gravity();
+
+    // Если игрок соприкасается с объектами - перемещаем игрока на определенное расстояние
+    // от объекта.
     for (auto& i : collidable_objects)
     {
         if (SDL_HasIntersection(&player->destRect, &i->destRect))
         {
+            // Игрок движется вниз.
             if (player->directionY > 0)
             {
                 if ((player->ypos <= i->ypos-1) && ((player->xpos >= i->xpos-30) && (player->xpos < i->xpos+TILE_SIZE)))
@@ -110,29 +122,38 @@ void Level::VerticalCollisions()
                 //     { player->ypos = i->ypos + TILE_SIZE + 2; player->Yspeed = 0; }
         }
     }
-    player->GravitySpeed = 0.2;
+    // Обновляем силу гравитации.
+    player->GravitySpeed = GRAVITY_SPEED;
 
-    if (player->ypos+20 < 0)
-        { player->ypos = -20; player->Yspeed = 0; }
+    // Коллизия с верхней границей экрана.
+    if (player->ypos+UPPER_BOUND < 0)
+        { player->ypos = -UPPER_BOUND; player->Yspeed = 0; }
 }
 
 
 void Level::GetCoins()
 {
     Tile* tmp_tile;
+
+    // Если игрок соприкасается с монетой
     for (int i = 0; i < coins.size(); i++)
     {
         if (SDL_HasIntersection(&player->destRect, &coins[i]->destRect))
         {
+            // Обновляем кол-во собранных монет.
             Game::total_coins_earned++;
             ui->UpdateCoinsNum();
+            // Запоминаем собранную монету.
             tmp_tile = coins[i];
+            // Удаляем её из массива монет.
             coins.erase(coins.begin() + i);
+            // Удаляем ее из массива движущихся объектов.
             for (int j = 0; j < movable_objects.size(); j++)
             {
                 if (movable_objects[j] == &tmp_tile->destRect)
                     movable_objects.erase(movable_objects.begin() + j);
             }
+            // Удаляем монету.
             delete tmp_tile;
         }
     }
@@ -141,6 +162,8 @@ void Level::GetCoins()
 
 void Level::TurnEnemiesDirection()
 {
+    // Если враг соприкасается со стоппером (объект с прозрачным спрайтом),
+    // то разворачиваем врага и меняем его сторону движения.
     for (auto& enemy : enemies)
     {
         for (auto& stopper : enemy_stoppers)
@@ -157,24 +180,31 @@ void Level::TurnEnemiesDirection()
 
 void Level::GetDamage()
 {
+    // Если игрок находится на определенном расстоянии от врагов
     for (auto& enemy : enemies)
     {
-        if ((player->ypos >= enemy->ypos - 50) && (player->ypos <= enemy->ypos + 50))
+        if ((player->ypos >= enemy->ypos - ENEMY_ATTACK_RADIUS_Y) && (player->ypos <= enemy->ypos + ENEMY_ATTACK_RADIUS_Y))
         {
-            if ((player->xpos >= enemy->xpos - ENEMY_ATTACK_RADIUS) && (player->xpos <= enemy->xpos + ENEMY_ATTACK_RADIUS))
+            if ((player->xpos >= enemy->xpos - ENEMY_ATTACK_RADIUS_X) && (player->xpos <= enemy->xpos + ENEMY_ATTACK_RADIUS_X))
             {
                 if (enemy->Attack(player->xpos, player->ypos))
                 {
-                    player->heal_points -= 30;
-                    ParticleEffects *p = new ParticleEffects("../graphics/particles/slash/", 4, player->xpos, player->ypos);
+                    // Уменьшаем хп игрока.
+                    player->heal_points -= ENEMY_STRENGTH;
+                    // Проигрываем анимацию аттаки.
+                    ParticleEffects *p = new ParticleEffects("../graphics/particles/slash/", ENEMY_SLASH_FRAMES_NUM, player->xpos, player->ypos);
                     particles.push_back(p);
                     movable_objects.push_back(&p->destRect);
                 }
             }
         }
     }
+
+    // Если игрок провалился в пропасть - обнуляем хп.
     if (player->ypos >= Game::screen_h)
         player->heal_points = 0;
+
+    // Если хп кончилось - отправляем игрока на экран смерти.
     if (player->heal_points <= 0)
         Game::state = DEATH;
 }
@@ -185,12 +215,12 @@ void Level::MoveObjects()
 {
     // Если игрок рядом с краем экрана - двигаем объекты.
     // Таким образом будет создаваться иллюзия движения игрока и камеры.
-    if ((player->xpos > 700 || player->xpos < 200) && do_move_objects)
+    if ((player->xpos > RIGHT_BOUND || player->xpos < LEFT_BOUND) && do_move_objects)
     {
         // Вычисляем в какую сторону двигать объекты.
         // Отбрасываем игрока на нужные координаты.
-        if (player->xpos > 700) { objects_speed = PLAYER_SPEED; player->xpos = 700; }
-        else if (player->xpos < 200) { objects_speed = -PLAYER_SPEED; player->xpos = 200; }
+        if (player->xpos > 700) { objects_speed = PLAYER_SPEED; player->xpos = RIGHT_BOUND; }
+        else if (player->xpos < 200) { objects_speed = -PLAYER_SPEED; player->xpos = LEFT_BOUND; }
         // Передвигаем объекты.
         for (int i = 0; i < movable_objects.size(); i++)
         {
@@ -202,46 +232,65 @@ void Level::MoveObjects()
 
 void Level::Update()
 {
+    // Двигаем объекты.
     MoveObjects();
+
     // Прорисовываем фон.
     bg->Update();
+
+    // Прорисовываем тайлы.
     for (int i = 0; i < tiles.size(); i++)
         tiles[i]->Update();
 
+    // Прорисовываем монеты.
     for (int i = 0; i < coins.size(); i++)
         coins[i]->Update();
 
+    // Прорисовываем стопперы для врагов.
     for (int i = 0; i < enemy_stoppers.size(); i++)
         enemy_stoppers[i]->Update();
 
+    // Прорисовываем врагов.
     for (int i = 0; i < enemies.size(); i++)
         enemies[i]->Update();
 
+    // Прорисовываем игрока.
     player->Update();
 
-
+    // Прорисовываем эффекты.
     for (int i = 0; i < particles.size(); i++)
     {
+        // Если эффект перестал обновляться
         if (!particles[i]->Update())
-        {
+        {   
+            // Запоминаем эффект
             ParticleEffects *p = particles[i];
+
+            // Удаляем эффект из массива движущихся объектов.
             for (int j = 0; j < movable_objects.size(); j++)
             {
                 if (movable_objects[j] == &particles[i]->destRect)
                     movable_objects.erase(movable_objects.begin() + j);
             }
+            // Удаляем эффект из массива эффектов.
             particles.erase(particles.begin() + i);
+            // Удаляем эффект.
             delete p;
 
         }
     }
 
+    // Обновляем интерфейс.
     ui->Update();
 
+    // Проверяем коллизии.
     HorizontalCollisions();
     VerticalCollisions();
+    // Сбор монет.
     GetCoins();
+    // Разворот и движение врагов.
     TurnEnemiesDirection();
+    // Получение урона игроком.
     GetDamage();
 }
 

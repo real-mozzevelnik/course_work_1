@@ -6,6 +6,7 @@
 
 vector<vector<int>> CsvParser::ParseCsv(const char* filepath)
 {
+    // Открываем csv файл.
     ifstream file(filepath);
 
     if (file.fail()) cout << "csv fail" << endl;
@@ -13,9 +14,10 @@ vector<vector<int>> CsvParser::ParseCsv(const char* filepath)
     string line;
     string elem;
     
-
+    // Двумерный массив для считывания числовой матрицы.
     vector<vector<int>> map;
 
+    // Парсим файл построчно.
     while (getline(file, line) && file.good())
     {
         istringstream token(line);
@@ -24,7 +26,7 @@ vector<vector<int>> CsvParser::ParseCsv(const char* filepath)
             tmp.push_back(stoi(elem));
         map.push_back(tmp);
     }
-
+    
     file.close();
 
     return map;

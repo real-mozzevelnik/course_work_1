@@ -22,9 +22,11 @@ SDL_Texture* Map::bg_img;
 
 void Map::CreateMap()
 {
+    // Переменные для формирования пути к карте и к спрайтам в зависимости от номера уровня.
     string path;
     stringstream ss;
-    
+
+    // Заполняем путь к картам.
     ss << "../level/level_" << Game::level_num << "_csv/";
     path = ss.str();
     ss.str(string());
@@ -41,40 +43,44 @@ void Map::CreateMap()
         {"player", CsvParser::ParseCsv((path+"player.csv").c_str())}
     };
 
+    // У второго уровня есть дополнительный слой.
     if (Game::level_num == 2)
     {
         layouts.insert({"beauty", CsvParser::ParseCsv((path+"beauty.csv").c_str())});
     }
 
-
+    // Заполняем путь к спрайту тайлов.
     ss << "../graphics/tiles/terrain_tiles/level_" << Game::level_num << ".png";
     path = ss.str();
     ss.str(string());
     ss.clear();
-    // Загружаем некоторые изображения.
+    // Загружаем изображения.
     terrain_img = TextureManager::LoadTexture(path.c_str());
     box_img = TextureManager::LoadTexture("../graphics/tiles/crate.png");
     coin_img = TextureManager::LoadTexture("../graphics/tiles/coin.png");
     stopper_img = TextureManager::LoadTexture("../graphics/stopper.png");
     player_img = TextureManager::LoadTexture("../graphics/charlieTheCapybaraAnimationSheet.png");
 
+    // Заполняем путь к спрайту фона.
     ss << "../graphics/background/level_" << Game::level_num << ".png";
     path = ss.str();
     ss.str(string());
     ss.clear();
+    // Загружаем изображение фона.
     bg_img = TextureManager::LoadTexture(path.c_str());
 
 
+    // Загружаем остальные объекты.
     vector<SDL_Rect> terrain_rects = TextureManager::CutGraphics(terrain_img, TILE_SIZE);
-    vector<SDL_Texture*> enemy_lich_img = TextureManager::LoadAnimationTextures("../graphics/enemies/lich/", 28);
-    vector<SDL_Texture*> enemy_ghost_img = TextureManager::LoadAnimationTextures("../graphics/enemies/ghost/", 7);
+    vector<SDL_Texture*> enemy_lich_img = TextureManager::LoadAnimationTextures("../graphics/enemies/lich/", ENEMY_LICH_FRAMES_NUM);
+    vector<SDL_Texture*> enemy_ghost_img = TextureManager::LoadAnimationTextures("../graphics/enemies/ghost/", ENEMY_GHOST_FRAMES_NUM);
     vector<vector<SDL_Texture*>> enemies_imgs;
     enemies_imgs.push_back(enemy_lich_img);
     enemies_imgs.push_back(enemy_ghost_img);
 
 
 
-    // Загружаем фон.
+    // Создаем фон.
     Level::bg = new Background(bg_img, 0, 0);
     // Загружаем все объекты по слоям.
     for (const auto& [style, layout] : layouts)
@@ -86,10 +92,10 @@ void Map::CreateMap()
                 if (layout[row_index][col_index] == -1)
                     continue;
 
+                // Формируем x и y.
                 int x = col_index * TILE_SIZE;
                 int y = row_index * TILE_SIZE;
-                x -= 200;
-                // y += TILE_SIZE;
+                x -= LEFT_BOUND;
 
                 if (style == "terrain")
                 {
@@ -147,6 +153,7 @@ void Map::CreateMap()
 
 void Map::DestroyTextures()
 {
+    // Удаляем все текстуры.
     SDL_DestroyTexture(terrain_img);
     SDL_DestroyTexture(box_img);
     SDL_DestroyTexture(coin_img);

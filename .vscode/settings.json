@@ -53,6 +53,11 @@
         "fstream": "cpp",
         "map": "cpp",
         "sstream": "cpp",
-        "format": "cpp"
+        "format": "cpp",
+        "charconv": "cpp",
+        "ctime": "cpp",
+        "optional": "cpp",
+        "span": "cpp",
+        "variant": "cpp"
     }
 }

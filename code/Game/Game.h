@@ -23,6 +23,7 @@ class Game
         Level *level;
         // Количество собранных монет.
         static int total_coins_earned;
+        // Размер экрана, считывается в RunTime.
         static int screen_w, screen_h;
 
     public:
@@ -44,6 +45,7 @@ class Game
         SDL_Window *window;
         // Переменная, отвечающая за игровой цикл.
         bool isRunning;
+        // Экран смерти игрока.
         Screen *death_screen;
 
 };

@@ -4,6 +4,7 @@
 #include <vector>
 #include "../Configs.h"
 
+// Класс для парсинга csv файлов, необходимых для формирования игровой карты.
 class CsvParser
 {
     public:

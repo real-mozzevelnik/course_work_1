@@ -21,8 +21,18 @@ using namespace std;
 #define WHITE {255, 255, 255}
 #define BLACK {0, 0, 0}
 #define RED {180, 0, 0}
-#define ENEMY_ATTACK_RADIUS 90
+#define ENEMY_ATTACK_RADIUS_X 90
+#define ENEMY_ATTACK_RADIUS_Y 50
+#define ENEMY_STRENGTH 30
+#define ENEMY_SLASH_FRAMES_NUM 4
+#define ENEMY_LICH_FRAMES_NUM 28
+#define ENEMY_GHOST_FRAMES_NUM 7
+#define GRAVITY_SPEED 0.2
+#define UPPER_BOUND 20
+#define LEFT_BOUND 200
+#define RIGHT_BOUND 700
 #define CONTINUE_TEXT "НАЖМИТЕ ENTER, ЧТОБЫ ПРОДОЛЖИТЬ"
+#define DEATH_TEXT "ПОМЕР"
 
 enum GAME_STATES
 {

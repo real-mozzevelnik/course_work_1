@@ -6,7 +6,7 @@ Player::Player(SDL_Texture* tex, int x, int y) : Entity(tex, x, y)
     flip = SDL_FLIP_NONE;
     directionX = directionY = 0;
     JumpSpeed = -10;
-    GravitySpeed = 0.2;
+    GravitySpeed = GRAVITY_SPEED;
     Yspeed = 0;
     animation_frame_num = 0;
     heal_points = 100;
@@ -15,7 +15,7 @@ Player::Player(SDL_Texture* tex, int x, int y) : Entity(tex, x, y)
     // Задаем начальное направляение игрока.
     facing = RIGHT;
     // Задаем скорость анимации.
-    animation_speed = 0.2;
+    animation_speed = ANIMATION_SPEED;
     for (int i = 0; i < animation_frames.size(); i++)
         animation_frames[i].h -= 10;
 }

@@ -55,18 +55,18 @@ Game::Game(const char* title, int xpos, int ypos, int width, int heigth, bool fu
         exit(EXIT_FAILURE);
     }
 
+    // Состояние игры в начале.
+    state = CREATE_NEW_LEVEL;
+    // Номер уровня в начале игры.
+    level_num = 1;
+    // Узнаем размеры экрана.
     SDL_GetRendererOutputSize(renderer, &screen_w, &screen_h);
+    // Инициализируем основные игровые поля.
+    level = nullptr;
+    death_screen = new Screen(DEATH_TEXT, RED, {screen_w/2-150, screen_h/2-200, 300, 200});
+
     // Начинаем игровой цикл.
     isRunning = true;
-
-    // Состояние игры в начале - меню.
-    state = CREATE_NEW_LEVEL;
-    // Номер уровня в начале игры - 0.
-    level_num = 2;
-    // Создаем уровень.
-    // level = new Level();
-    level = nullptr;
-    death_screen = new Screen("ПОМЕР", RED, {screen_w/2-150, screen_h/2-200, 300, 200});
 }
 
 
@@ -81,7 +81,6 @@ Game::~Game()
     // Освобождаем всю выделенную SDL память.
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-    cout << "End" << endl;
 }
 
 
@@ -110,7 +109,10 @@ void Game::HandleEvents()
     case SDL_QUIT:
         isRunning = false;
         break;
-
+    // Парсим клавиатуру с помощью кастомного парсера.
+    // (Причина, по которой был написан кастомный парсер состоит в том,
+    // что SDL_Event - это union, из-за чего нет возможности обрабатывать несколько
+    // одновременных нажатий клавиш).
     case SDL_KEYDOWN:
         Level::kb.HandleKeyEvent(static_cast<int>(event.key.keysym.sym % 350), 1);
         break;
@@ -137,12 +139,14 @@ void Game::CheckState()
     }
     else if (state == DEATH)
     {
+        // Удаляем уровень, чтобы потом создать новый.
         if (level)
             { delete level; level = nullptr; }
         death_screen->Update();
     }
     else if (state == CREATE_NEW_LEVEL)
     {
+        // Создаем уровень и запускаем его.
         level = new Level();
         state = RUN;
     }
