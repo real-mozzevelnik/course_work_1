@@ -31,6 +31,7 @@ using namespace std;
 #define UPPER_BOUND 20
 #define LEFT_BOUND 200
 #define RIGHT_BOUND 700
+#define KEYS_NUM 350
 #define CONTINUE_TEXT "НАЖМИТЕ ENTER, ЧТОБЫ ПРОДОЛЖИТЬ"
 #define DEATH_TEXT "ПОМЕР"
 

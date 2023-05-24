@@ -3,10 +3,12 @@
 
 #include "../Configs.h"
 
+// Класс для парсинга клавиатуры.
 class Keyboard
 {
     public:
-        char keystate[350];
+        // Массив, хранящий состояние каждой клавиши.
+        char keystate[KEYS_NUM];
     public:
         Keyboard() {};
         ~Keyboard() {};
