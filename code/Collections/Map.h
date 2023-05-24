@@ -14,6 +14,7 @@ class Map
         static SDL_Texture* stopper_img;
         static SDL_Texture* player_img;
         static SDL_Texture* bg_img;
+        static SDL_Texture* door_img;
     public:
         // Создание карты.
         static void CreateMap();

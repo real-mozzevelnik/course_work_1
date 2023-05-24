@@ -22,7 +22,7 @@ using namespace std;
 #define BLACK {0, 0, 0}
 #define RED {180, 0, 0}
 #define ENEMY_ATTACK_RADIUS_X 90
-#define ENEMY_ATTACK_RADIUS_Y 50
+#define ENEMY_ATTACK_RADIUS_Y 30
 #define ENEMY_STRENGTH 30
 #define ENEMY_SLASH_FRAMES_NUM 4
 #define ENEMY_LICH_FRAMES_NUM 28
@@ -34,13 +34,15 @@ using namespace std;
 #define KEYS_NUM 350
 #define CONTINUE_TEXT "НАЖМИТЕ ENTER, ЧТОБЫ ПРОДОЛЖИТЬ"
 #define DEATH_TEXT "ПОМЕР"
+#define NEXT_LEVEL_TEXT "СЛЕДУЮЩЕЕ ПРИКЛЮЧЕНИЕ"
 
 enum GAME_STATES
 {
     MENU,
     RUN,
     DEATH,
-    CREATE_NEW_LEVEL
+    CREATE_NEW_LEVEL,
+    NEXT_LEVEL
 };
 
 #define FPS 120

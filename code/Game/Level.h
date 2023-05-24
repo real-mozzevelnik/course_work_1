@@ -44,6 +44,10 @@ class Level
         static Keyboard kb;
         // Интерфейс.
         static UI *ui;
+        // Переход на следующий уровень.
+        static Tile* door;
+        // Собранные за уровень монеты.
+        static int coins_earned;
     public:
         Level();
         ~Level();
@@ -62,6 +66,8 @@ class Level
         void TurnEnemiesDirection();
         // Получение игроком урона.
         void GetDamage();
+        // Переход на следующий уровень.
+        void GoToNextLevel();
     private:
         // Скорость передвижения объектов.
         int objects_speed;

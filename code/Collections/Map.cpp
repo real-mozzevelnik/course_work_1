@@ -18,6 +18,7 @@ SDL_Texture* Map::coin_img;
 SDL_Texture* Map::stopper_img;
 SDL_Texture* Map::player_img;
 SDL_Texture* Map::bg_img;
+SDL_Texture* Map::door_img;
 
 
 void Map::CreateMap()
@@ -60,6 +61,7 @@ void Map::CreateMap()
     coin_img = TextureManager::LoadTexture("../graphics/tiles/coin.png");
     stopper_img = TextureManager::LoadTexture("../graphics/stopper.png");
     player_img = TextureManager::LoadTexture("../graphics/charlieTheCapybaraAnimationSheet.png");
+    door_img = TextureManager::LoadTexture("../graphics/tiles/door.png");
 
     // Заполняем путь к спрайту фона.
     ss << "../graphics/background/level_" << Game::level_num << ".png";
@@ -113,7 +115,9 @@ void Map::CreateMap()
                 }
                 else if (style == "door")
                 {
-                    // create door
+                    Tile* door = new Tile(door_img, x, y, {0,0,46,56});
+                    Level::movable_objects.push_back(&door->destRect);
+                    Level::door = door;
                 }
                 else if (style == "coins")
                 {

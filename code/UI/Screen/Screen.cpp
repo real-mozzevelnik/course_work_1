@@ -4,7 +4,7 @@ Screen::Screen(const char* message, SDL_Color text_color, SDL_Rect text_pos)
 {
     SDL_SetRenderDrawColor(Game::renderer, 0, 0, 0, 0);
     message_text = new Text(message, text_color, text_pos);
-    continue_text = new Text(CONTINUE_TEXT, WHITE, {275,600,500,100});
+    continue_text = new Text(CONTINUE_TEXT, WHITE, {225,600,600,70});
 }
 
 Screen::~Screen()

@@ -64,6 +64,7 @@ Game::Game(const char* title, int xpos, int ypos, int width, int heigth, bool fu
     // Инициализируем основные игровые поля.
     level = nullptr;
     death_screen = new Screen(DEATH_TEXT, RED, {screen_w/2-150, screen_h/2-200, 300, 200});
+    next_level_screen = new Screen(NEXT_LEVEL_TEXT, WHITE, {screen_w/2-285, screen_h/2-200, 600, 150});
 
     // Начинаем игровой цикл.
     isRunning = true;
@@ -78,6 +79,7 @@ Game::~Game()
         delete level;
     // Удаляем разные экраны.
     delete death_screen;
+    delete next_level_screen;
     // Освобождаем всю выделенную SDL память.
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
@@ -143,6 +145,12 @@ void Game::CheckState()
         if (level)
             { delete level; level = nullptr; }
         death_screen->Update();
+    }
+    else if (state == NEXT_LEVEL)
+    {
+        if (level)
+            { delete level; level = nullptr; }
+        next_level_screen->Update();
     }
     else if (state == CREATE_NEW_LEVEL)
     {

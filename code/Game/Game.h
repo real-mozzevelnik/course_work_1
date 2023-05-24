@@ -47,6 +47,8 @@ class Game
         bool isRunning;
         // Экран смерти игрока.
         Screen *death_screen;
+        // Экран перехода на следующий уровень.
+        Screen *next_level_screen;
 
 };
 

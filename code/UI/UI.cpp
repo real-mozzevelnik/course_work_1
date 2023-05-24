@@ -45,7 +45,7 @@ void UI::UpdateCoinsNum()
 {
     delete coins_num;
     coins_num = nullptr;
-    coins_num = new Text(to_string(Game::total_coins_earned).c_str(), WHITE, {63,117,30,30});
+    coins_num = new Text(to_string(Game::total_coins_earned+Level::coins_earned).c_str(), WHITE, {63,117,30,30});
 }
 
 

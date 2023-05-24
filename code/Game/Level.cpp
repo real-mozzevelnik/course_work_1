@@ -21,16 +21,22 @@ vector<Enemy*> Level::enemies;
 vector<Tile*> Level::enemy_stoppers;
 vector<ParticleEffects*> Level::particles;
 UI* Level::ui;
+Tile* Level::door;
+int Level::coins_earned;
 
 
 Level::Level()
 {
+    coins_earned = 0;
     Map::CreateMap();
 }
 
 
 Level::~Level()
 {
+    // Обнуляем собранные монеты.
+    coins_earned = 0;
+
     // Удаляем все текстуры.
     Map::DestroyTextures();
     // Удаляем задний фон.
@@ -54,6 +60,7 @@ Level::~Level()
         delete particles[i];
 
     delete ui;
+    delete door;
 
     // Очищаем все массивы.
     movable_objects.clear();
@@ -141,7 +148,7 @@ void Level::GetCoins()
         if (SDL_HasIntersection(&player->destRect, &coins[i]->destRect))
         {
             // Обновляем кол-во собранных монет.
-            Game::total_coins_earned++;
+            coins_earned++;
             ui->UpdateCoinsNum();
             // Запоминаем собранную монету.
             tmp_tile = coins[i];
@@ -207,6 +214,17 @@ void Level::GetDamage()
     // Если хп кончилось - отправляем игрока на экран смерти.
     if (player->heal_points <= 0)
         Game::state = DEATH;
+}
+
+
+void Level::GoToNextLevel()
+{
+    if (player->xpos >= door->xpos-TILE_SIZE)
+    {
+        Game::total_coins_earned += coins_earned;
+        Game::state = NEXT_LEVEL;
+        Game::level_num++;
+    }
 }
 
 
@@ -283,6 +301,9 @@ void Level::Update()
     // Обновляем интерфейс.
     ui->Update();
 
+    // Обновляем дверь на следующий уровень.
+    door->Update();
+
     // Проверяем коллизии.
     HorizontalCollisions();
     VerticalCollisions();
@@ -292,6 +313,8 @@ void Level::Update()
     TurnEnemiesDirection();
     // Получение урона игроком.
     GetDamage();
+    // Переход на следующий уровень.
+    GoToNextLevel();
 }
 
 

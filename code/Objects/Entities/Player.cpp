@@ -58,9 +58,12 @@ void Player::HandleInput()
 
     if (Level::kb.keystate[SDLK_SPACE])
     {
+        if (!inAir)
+        {
         Jump();
         directionY = -1;
         inAir = true;
+        }
 
     }
     // Если действие - отпуск клавиши.
