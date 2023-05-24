@@ -41,6 +41,11 @@ void Map::CreateMap()
         {"player", CsvParser::ParseCsv((path+"player.csv").c_str())}
     };
 
+    if (Game::level_num == 2)
+    {
+        layouts.insert({"beauty", CsvParser::ParseCsv((path+"beauty.csv").c_str())});
+    }
+
 
     ss << "../graphics/tiles/terrain_tiles/level_" << Game::level_num << ".png";
     path = ss.str();
@@ -60,7 +65,6 @@ void Map::CreateMap()
     bg_img = TextureManager::LoadTexture(path.c_str());
 
 
-    // 
     vector<SDL_Rect> terrain_rects = TextureManager::CutGraphics(terrain_img, TILE_SIZE);
     vector<SDL_Texture*> enemy_lich_img = TextureManager::LoadAnimationTextures("../graphics/enemies/lich/", 28);
     vector<SDL_Texture*> enemy_ghost_img = TextureManager::LoadAnimationTextures("../graphics/enemies/ghost/", 7);
@@ -85,7 +89,7 @@ void Map::CreateMap()
                 int x = col_index * TILE_SIZE;
                 int y = row_index * TILE_SIZE;
                 x -= 200;
-                y += TILE_SIZE;
+                // y += TILE_SIZE;
 
                 if (style == "terrain")
                 {
@@ -126,6 +130,12 @@ void Map::CreateMap()
                 else if (style == "player")
                 {
                     Level::player = new Player(player_img, x, y);
+                }
+                else if (style == "beauty")
+                {
+                    Tile* tile = new Tile(terrain_img, x, y, terrain_rects[layout[row_index][col_index]]);
+                    Level::tiles.push_back(tile);
+                    Level::movable_objects.push_back(&tile->destRect);
                 }
             }
         }

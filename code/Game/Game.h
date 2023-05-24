@@ -5,6 +5,7 @@
 
 // Объявляем класс Level, чтобы была возможность создать указатель этого типа как поле класса Game.
 class Level;
+class Screen;
 
 // Класс, отвечающий за основной игровой цикл.
 class Game
@@ -13,7 +14,7 @@ class Game
         // Рендерер.
         static SDL_Renderer *renderer;
         // Состояние игрового процесса.
-        static string state;
+        static int state;
         // Номер уровня.
         static int level_num;
         // Поле для считывания событий.
@@ -22,6 +23,7 @@ class Game
         Level *level;
         // Количество собранных монет.
         static int total_coins_earned;
+        static int screen_w, screen_h;
 
     public:
         // Конструктор, в который передаются основные характеристики игрового окна.
@@ -42,6 +44,8 @@ class Game
         SDL_Window *window;
         // Переменная, отвечающая за игровой цикл.
         bool isRunning;
+        Screen *death_screen;
+
 };
 
 #endif

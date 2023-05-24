@@ -19,8 +19,18 @@ using namespace std;
 #define ANIMATION_SPEED 0.1
 #define HEALTH_BAR_WIDTH 156
 #define WHITE {255, 255, 255}
+#define BLACK {0, 0, 0}
 #define RED {180, 0, 0}
 #define ENEMY_ATTACK_RADIUS 90
+#define CONTINUE_TEXT "НАЖМИТЕ ENTER, ЧТОБЫ ПРОДОЛЖИТЬ"
+
+enum GAME_STATES
+{
+    MENU,
+    RUN,
+    DEATH,
+    CREATE_NEW_LEVEL
+};
 
 #define FPS 120
 

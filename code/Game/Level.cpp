@@ -53,6 +53,15 @@ Level::~Level()
         delete particles[i];
 
     delete ui;
+
+    // Очищаем все массивы.
+    movable_objects.clear();
+    tiles.clear();
+    collidable_objects.clear();
+    coins.clear();
+    enemies.clear();
+    enemy_stoppers.clear();
+    particles.clear();
 };
 
 
@@ -164,6 +173,10 @@ void Level::GetDamage()
             }
         }
     }
+    if (player->ypos >= Game::screen_h)
+        player->heal_points = 0;
+    if (player->heal_points <= 0)
+        Game::state = DEATH;
 }
 
 

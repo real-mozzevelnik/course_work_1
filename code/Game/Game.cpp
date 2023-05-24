@@ -1,12 +1,15 @@
 #include "Game.h"
 #include "Level.h"
+#include "../UI/Screen/Screen.h"
 
 // Объявляем static поля класса.
 SDL_Renderer* Game::renderer = nullptr;
-string Game::state;
+int Game::state;
 int Game::level_num = 1;
 int Game::total_coins_earned = 0;
 SDL_Event Game::event;
+int Game::screen_h;
+int Game::screen_w;
 
 
 // Конструктор.
@@ -52,15 +55,18 @@ Game::Game(const char* title, int xpos, int ypos, int width, int heigth, bool fu
         exit(EXIT_FAILURE);
     }
 
+    SDL_GetRendererOutputSize(renderer, &screen_w, &screen_h);
     // Начинаем игровой цикл.
     isRunning = true;
 
     // Состояние игры в начале - меню.
-    state = "Menu";
+    state = CREATE_NEW_LEVEL;
     // Номер уровня в начале игры - 0.
-    level_num = 4;
+    level_num = 2;
     // Создаем уровень.
-    level = new Level();
+    // level = new Level();
+    level = nullptr;
+    death_screen = new Screen("ПОМЕР", RED, {screen_w/2-150, screen_h/2-200, 300, 200});
 }
 
 
@@ -68,7 +74,10 @@ Game::Game(const char* title, int xpos, int ypos, int width, int heigth, bool fu
 Game::~Game()
 {
     // Удаляем уровень.
-    delete level;
+    if (level)
+        delete level;
+    // Удаляем разные экраны.
+    delete death_screen;
     // Освобождаем всю выделенную SDL память.
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
@@ -81,10 +90,10 @@ void Game::Update()
 {
     // Очищаем буфер рендерера.
     SDL_RenderClear(renderer);
-    // В зависимости от текущего состояния выполняем необходимые действия.
-    CheckState();
     // Обрабатываем события.
     HandleEvents();
+    // В зависимости от текущего состояния выполняем необходимые действия.
+    CheckState();
     // Рисуем все объекты из рендерера.
     SDL_RenderPresent(renderer);
 }
@@ -118,17 +127,24 @@ void Game::HandleEvents()
 // В зависимости от текущего состояния игры выполняем дейтсвия.
 void Game::CheckState()
 {
-    if (state == "Menu")
+    if (state == MENU)
+    {
+        
+    }
+    else if (state == RUN)
     {
         level->Run();
     }
-    else if (state == "Run")
+    else if (state == DEATH)
     {
-
+        if (level)
+            { delete level; level = nullptr; }
+        death_screen->Update();
     }
-    else if (state == "Death")
+    else if (state == CREATE_NEW_LEVEL)
     {
-
+        level = new Level();
+        state = RUN;
     }
 }
 
