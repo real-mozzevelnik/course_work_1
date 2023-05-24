@@ -223,7 +223,6 @@ void Level::GoToNextLevel()
     {
         Game::total_coins_earned += coins_earned;
         Game::state = NEXT_LEVEL;
-        Game::level_num++;
     }
 }
 
