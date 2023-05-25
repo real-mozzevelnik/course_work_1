@@ -6,6 +6,7 @@
 // Объявляем класс Level, чтобы была возможность создать указатель этого типа как поле класса Game.
 class Level;
 class Screen;
+class Menu;
 
 // Класс, отвечающий за основной игровой цикл.
 class Game
@@ -49,6 +50,8 @@ class Game
         Screen *death_screen;
         // Экран перехода на следующий уровень.
         Screen *next_level_screen;
+        // Меню.
+        Menu *menu;
 
 };
 

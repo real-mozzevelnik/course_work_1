@@ -35,6 +35,7 @@ using namespace std;
 #define CONTINUE_TEXT "НАЖМИТЕ ENTER, ЧТОБЫ ПРОДОЛЖИТЬ"
 #define DEATH_TEXT "ПОМЕР"
 #define NEXT_LEVEL_TEXT "СЛЕДУЮЩЕЕ ПРИКЛЮЧЕНИЕ"
+#define MENU_MAIN_TEXT "МЕНЮ"
 
 enum GAME_STATES
 {

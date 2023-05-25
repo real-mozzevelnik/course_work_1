@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Level.h"
 #include "../UI/Screen/Screen.h"
+#include "../UI/Screen/Menu.h"
 
 // Объявляем static поля класса.
 SDL_Renderer* Game::renderer = nullptr;
@@ -56,13 +57,14 @@ Game::Game(const char* title, int xpos, int ypos, int width, int heigth, bool fu
     }
 
     // Состояние игры в начале.
-    state = CREATE_NEW_LEVEL;
+    state = MENU;
     // Номер уровня в начале игры.
     level_num = 1;
     // Узнаем размеры экрана.
     SDL_GetRendererOutputSize(renderer, &screen_w, &screen_h);
     // Инициализируем основные игровые поля.
     level = nullptr;
+    menu = new Menu();
     death_screen = new Screen(DEATH_TEXT, RED, {screen_w/2-150, screen_h/2-200, 300, 200});
     next_level_screen = new Screen(NEXT_LEVEL_TEXT, WHITE, {screen_w/2-285, screen_h/2-200, 600, 150});
 
@@ -80,6 +82,7 @@ Game::~Game()
     // Удаляем разные экраны.
     delete death_screen;
     delete next_level_screen;
+    delete menu;
     // Освобождаем всю выделенную SDL память.
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
@@ -133,7 +136,7 @@ void Game::CheckState()
 {
     if (state == MENU)
     {
-        
+        menu->Update();
     }
     else if (state == RUN)
     {

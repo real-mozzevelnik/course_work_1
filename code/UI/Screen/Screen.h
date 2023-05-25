@@ -10,7 +10,7 @@ class Screen
     public:
         Screen(const char* message, SDL_Color text_color, SDL_Rect text_pos);
         ~Screen();
-        void Update();
+        virtual void Update();
 
 };
 
