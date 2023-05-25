@@ -21,6 +21,7 @@ using namespace std;
 #define WHITE {255, 255, 255}
 #define BLACK {0, 0, 0}
 #define RED {180, 0, 0}
+#define GREEN {124, 252, 0}
 #define ENEMY_ATTACK_RADIUS_X 90
 #define ENEMY_ATTACK_RADIUS_Y 30
 #define ENEMY_STRENGTH 30
@@ -44,6 +45,16 @@ enum GAME_STATES
     DEATH,
     CREATE_NEW_LEVEL,
     NEXT_LEVEL
+};
+
+enum MENU_STATES
+{
+    MAIN_MENU,
+    ENTER_NAME,
+    START,
+    RESULTS_TABLE,
+    INFO,
+    EXIT
 };
 
 #define FPS 120
