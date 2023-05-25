@@ -60,9 +60,9 @@ void Player::HandleInput()
     {
         if (!inAir)
         {
-        Jump();
-        directionY = -1;
-        inAir = true;
+            Jump();
+            directionY = -1;
+            inAir = true;
         }
 
     }
@@ -82,6 +82,7 @@ void Player::Gravity()
     Yspeed += GravitySpeed;
     ypos += Yspeed;
     if (Yspeed > 0) directionY = 1;
+    if (Yspeed > 2) inAir = true;
 }
 
 

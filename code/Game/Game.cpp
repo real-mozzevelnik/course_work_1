@@ -148,7 +148,6 @@ void Game::CheckState()
     }
     else if (state == NEXT_LEVEL)
     {
-        level_num++;
         // Удаляем уровень, чтобы потом создать новый.
         if (level)
             { delete level; level = nullptr; }

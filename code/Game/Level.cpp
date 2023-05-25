@@ -221,6 +221,7 @@ void Level::GoToNextLevel()
 {
     if (player->xpos >= door->xpos-TILE_SIZE)
     {
+        Game::level_num++;
         Game::total_coins_earned += coins_earned;
         Game::state = NEXT_LEVEL;
     }
