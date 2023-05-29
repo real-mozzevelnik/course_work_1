@@ -87,6 +87,11 @@ void Menu::EnterName()
 {
     if (Game::event.type == SDL_KEYDOWN)
     {
+        if (Game::event.key.keysym.sym == SDLK_RETURN)
+        {
+            menu_state = START;
+            return;
+        }
         if (Game::event.key.keysym.sym == SDLK_BACKSPACE)
         {
             if (name_input_str.size() > 0)
@@ -125,7 +130,8 @@ void Menu::CheckMenuState()
         break;
 
     case START:
-        buttons.at(MAIN_MENU)->Update();
+        Game::state = CREATE_NEW_LEVEL;
+        menu_state = MAIN_MENU;
         break;
     
     case ENTER_NAME:
