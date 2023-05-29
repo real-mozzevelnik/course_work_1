@@ -16,10 +16,16 @@ class Menu : public Screen
         map<int , Button*> buttons;
         int prev_button_press_time;
         Text *info_text;
+        Text *enter_name_text;
+        Text *name;
+        string name_input_str;
+        SDL_Rect name_rect;
     public:
         Menu();
         ~Menu();
         void Update() override;
+    private:
+        void EnterName();
         void CheckMenuState();
         void PushButtons();
 };

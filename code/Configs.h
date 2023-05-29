@@ -44,6 +44,7 @@ using namespace std;
 #define INFO_BUTTON_TEXT "СПРАВКА"
 #define BACK_BUTTON_TEXT "ВЕРНУТЬСЯ"
 #define INFO_TEXT "ПРЕДЫСТОРИЯ:\n    КАПИБАРА НАТАША ОЧЕНЬ ЛЮБИТ ОПАСНЫЕ ПРИКЛЮЧЕНИЯ.\n    ПОМОГИ ЕЙ ПРОЙТИ ВСЕ ПРИКЛЮЧЕНИЯ И ВЫЖИТЬ.\n\nУПРАВЛЕНИЕ:\n    ДВИГАТЬСЯ НА КЛАВИШИ 'A', 'D', ПРЫЖОК НА 'ПРОБЕЛ'."
+#define ENTER_NAME_TEXT "ВВЕДИТЕ ИМЯ ИГРОКА:\n(ENTER ДЛЯ ПРОДОЛЖЕНИЯ)"
 
 enum GAME_STATES
 {

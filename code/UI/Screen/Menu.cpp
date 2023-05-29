@@ -26,12 +26,18 @@ Menu::Menu() : Screen(MENU_MAIN_TEXT, WHITE, {Game::screen_w/2 - 100, Game::scre
     buttons.insert({MAIN_MENU, tmp_button});
     tmp_button = new Button(RESULTS_TABLE_BUTTON_TEXT, {Game::screen_w/2 - 150, static_cast<int>((Game::screen_h/8)*3.5), 300, 100}, RESULTS_TABLE);
     buttons.insert({RESULTS_TABLE, tmp_button});
-    tmp_button = new Button(START_GAME_BUTTON_TEXT, {Game::screen_w/2 - 150, static_cast<int>((Game::screen_h/8)*2), 300, 100}, START);
-    buttons.insert({START, tmp_button});
+    tmp_button = new Button(START_GAME_BUTTON_TEXT, {Game::screen_w/2 - 150, static_cast<int>((Game::screen_h/8)*2), 300, 100},ENTER_NAME);
+    buttons.insert({ENTER_NAME, tmp_button});
 
     // Создаем нужные элементы для страниц меню. 
     info_text = new Text(INFO_TEXT, WHITE, {50, static_cast<int>((Game::screen_h/8)*2), 
         Game::screen_w - 100, Game::screen_h - (Game::screen_h/8)*4});
+    enter_name_text = new Text(ENTER_NAME_TEXT, WHITE, {Game::screen_w/2 - 175, static_cast<int>((Game::screen_h/8)*2), 350, 150});
+    name_input_str = "";
+    name_rect = {Game::screen_w/2 - 1, static_cast<int>((Game::screen_h/8)*3.5), 1, 100};
+    name = new Text(name_input_str.c_str(), WHITE, name_rect);
+
+
 
 }
 
@@ -42,6 +48,8 @@ Menu::~Menu()
         delete i.second;
 
     delete info_text;
+    delete enter_name_text;
+    delete name;
 
     SDL_DestroyTexture(bg_tex);
     cout << "Menu dest" << endl;
@@ -75,6 +83,37 @@ void Menu::PushButtons()
 }
 
 
+void Menu::EnterName()
+{
+    if (Game::event.type == SDL_KEYDOWN)
+    {
+        if (Game::event.key.keysym.sym == SDLK_BACKSPACE)
+        {
+            if (name_input_str.size() > 0)
+            {
+                name_input_str.erase(name_input_str.end()-1);
+                name_rect.w -= 20;
+                name_rect.x += 10;
+            }
+        }
+        else
+        {
+            if (name_input_str.size() < 20)
+            {
+                name_rect.w += 20;
+                name_rect.x -= 10;
+                if (Game::event.key.keysym.sym == SDLK_SPACE)
+                    name_input_str += " ";
+                else
+                    name_input_str += *SDL_GetKeyName(Game::event.key.keysym.sym);
+            }
+        }
+        delete name;
+        name = new Text(name_input_str.c_str(), WHITE, name_rect);;
+    }
+}
+
+
 void Menu::CheckMenuState()
 {
     switch (menu_state)
@@ -90,6 +129,9 @@ void Menu::CheckMenuState()
         break;
     
     case ENTER_NAME:
+        enter_name_text->Update();
+        name->Update();
+        EnterName();
         buttons.at(MAIN_MENU)->Update();
         break;
 
