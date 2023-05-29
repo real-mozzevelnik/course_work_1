@@ -9,6 +9,7 @@ class Button
         SDL_Rect destRect;
         Text* text;
         int state_to_change;
+        SDL_Color button_color;
     public:
         Button(const char* button_text, SDL_Rect destRect, int state);
         ~Button();

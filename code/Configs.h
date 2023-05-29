@@ -33,10 +33,17 @@ using namespace std;
 #define LEFT_BOUND 200
 #define RIGHT_BOUND 700
 #define KEYS_NUM 350
+#define BUTTON_PRESS_COOLDOWN 300
 #define CONTINUE_TEXT "НАЖМИТЕ ENTER, ЧТОБЫ ПРОДОЛЖИТЬ"
 #define DEATH_TEXT "ПОМЕР"
 #define NEXT_LEVEL_TEXT "СЛЕДУЮЩЕЕ ПРИКЛЮЧЕНИЕ"
 #define MENU_MAIN_TEXT "МЕНЮ"
+#define EXIT_BUTTON_TEXT "ВЫЙТИ"
+#define START_GAME_BUTTON_TEXT "НАЧАТЬ"
+#define RESULTS_TABLE_BUTTON_TEXT "ТАБЛИЦА РЕЗУЛЬТАТОВ"
+#define INFO_BUTTON_TEXT "СПРАВКА"
+#define BACK_BUTTON_TEXT "ВЕРНУТЬСЯ"
+#define INFO_TEXT "ПРЕДЫСТОРИЯ:\n    КАПИБАРА НАТАША ОЧЕНЬ ЛЮБИТ ОПАСНЫЕ ПРИКЛЮЧЕНИЯ.\n    ПОМОГИ ЕЙ ПРОЙТИ ВСЕ ПРИКЛЮЧЕНИЯ И ВЫЖИТЬ.\n\nУПРАВЛЕНИЕ:\n    ДВИГАТЬСЯ НА КЛАВИШИ 'A', 'D', ПРЫЖОК НА 'ПРОБЕЛ'."
 
 enum GAME_STATES
 {
@@ -44,7 +51,8 @@ enum GAME_STATES
     RUN,
     DEATH,
     CREATE_NEW_LEVEL,
-    NEXT_LEVEL
+    NEXT_LEVEL,
+    EXIT
 };
 
 enum MENU_STATES
@@ -54,7 +62,7 @@ enum MENU_STATES
     START,
     RESULTS_TABLE,
     INFO,
-    EXIT
+    EXIT_MENU
 };
 
 #define FPS 120

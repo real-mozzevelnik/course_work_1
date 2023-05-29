@@ -5,6 +5,7 @@
 #include <map>
 
 class Button;
+class Text;
 
 class Menu : public Screen
 {
@@ -13,11 +14,14 @@ class Menu : public Screen
         SDL_Rect bg_destRect;
         int menu_state;
         map<int , Button*> buttons;
+        int prev_button_press_time;
+        Text *info_text;
     public:
         Menu();
         ~Menu();
         void Update() override;
         void CheckMenuState();
+        void PushButtons();
 };
 
 #endif

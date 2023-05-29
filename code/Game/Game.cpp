@@ -162,6 +162,8 @@ void Game::CheckState()
         level = new Level();
         state = RUN;
     }
+    else if (state == EXIT)
+        isRunning = false;
 }
 
 
