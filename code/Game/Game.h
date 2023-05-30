@@ -41,6 +41,8 @@ class Game
         void CheckState();
         // Запуск игры.
         void Run();
+        // Сохранение результатов после полного прохождения игры.
+        void SaveResults();
 
     private:
         // Дескриптор окна.
@@ -51,6 +53,8 @@ class Game
         Screen *death_screen;
         // Экран перехода на следующий уровень.
         Screen *next_level_screen;
+        // Экран окончания игры.
+        Screen *end_screen;
         // Меню.
         Menu *menu;
         // Экран паузы.

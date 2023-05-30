@@ -1,4 +1,7 @@
 #include "Game.h"
+
+#include <fstream>
+
 #include "Level.h"
 #include "../UI/Screen/Screen.h"
 #include "../UI/Screen/Menu.h"
@@ -60,7 +63,7 @@ Game::Game(const char* title, int xpos, int ypos, int width, int heigth, bool fu
     // Состояние игры в начале.
     state = MENU;
     // Номер уровня в начале игры.
-    level_num = 1;
+    level_num = 4;
     // Узнаем размеры экрана.
     SDL_GetRendererOutputSize(renderer, &screen_w, &screen_h);
     // Инициализируем основные игровые поля.
@@ -69,7 +72,7 @@ Game::Game(const char* title, int xpos, int ypos, int width, int heigth, bool fu
     pause = new Pause();
     death_screen = new Screen(DEATH_TEXT, RED, {screen_w/2-150, screen_h/2-200, 300, 200});
     next_level_screen = new Screen(NEXT_LEVEL_TEXT, WHITE, {screen_w/2-285, screen_h/2-200, 600, 150});
-
+    end_screen = new Screen(END_SCREEN_TEXT, WHITE, {screen_w/2-285, screen_h/2-200, 600, 150});
     // Начинаем игровой цикл.
     isRunning = true;
 }
@@ -86,6 +89,7 @@ Game::~Game()
     delete next_level_screen;
     delete menu;
     delete pause;
+    delete end_screen;
     // Освобождаем всю выделенную SDL память.
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
@@ -154,6 +158,11 @@ void Game::CheckState()
     }
     else if (state == NEXT_LEVEL)
     {
+        if (level_num == 5)
+        {
+            end_screen->Update();
+            return;
+        }
         // Удаляем уровень, чтобы потом создать новый.
         if (level)
             { delete level; level = nullptr; }
@@ -161,6 +170,12 @@ void Game::CheckState()
     }
     else if (state == CREATE_NEW_LEVEL)
     {
+        if (level_num == 5)
+        {
+            SaveResults();
+            state = MENU;
+            return;
+        }
         if (level)
             delete level;
         // Создаем уровень и запускаем его.
@@ -173,6 +188,16 @@ void Game::CheckState()
     }
     else if (state == EXIT)
         isRunning = false;
+}
+
+
+void Game::SaveResults()
+{
+    ofstream file;
+    file.open("../results.txt");
+    file << "\n";
+    file << menu->name_input_str << " : " << total_coins_earned;
+    file.close();
 }
 
 

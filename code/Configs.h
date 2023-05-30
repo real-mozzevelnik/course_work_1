@@ -24,7 +24,7 @@ using namespace std;
 #define GREEN {124, 252, 0}
 #define ENEMY_ATTACK_RADIUS_X 90
 #define ENEMY_ATTACK_RADIUS_Y 30
-#define ENEMY_STRENGTH 30
+#define ENEMY_STRENGTH 15
 #define ENEMY_SLASH_FRAMES_NUM 4
 #define ENEMY_LICH_FRAMES_NUM 28
 #define ENEMY_GHOST_FRAMES_NUM 7
@@ -43,9 +43,11 @@ using namespace std;
 #define RESULTS_TABLE_BUTTON_TEXT "ТАБЛИЦА РЕЗУЛЬТАТОВ"
 #define INFO_BUTTON_TEXT "СПРАВКА"
 #define BACK_BUTTON_TEXT "ВЕРНУТЬСЯ"
-#define INFO_TEXT "ПРЕДЫСТОРИЯ:\n    КАПИБАРА НАТАША ОЧЕНЬ ЛЮБИТ ОПАСНЫЕ ПРИКЛЮЧЕНИЯ.\n    ПОМОГИ ЕЙ ПРОЙТИ ВСЕ ПРИКЛЮЧЕНИЯ И ВЫЖИТЬ.\n\nУПРАВЛЕНИЕ:\n    ДВИГАТЬСЯ НА КЛАВИШИ 'A', 'D', ПРЫЖОК НА 'ПРОБЕЛ'."
+#define INFO_TEXT "ПРЕДЫСТОРИЯ:\n    КАПИБАРА НАТАША ОЧЕНЬ ЛЮБИТ ОПАСНЫЕ ПРИКЛЮЧЕНИЯ.\n    ПОМОГИ ЕЙ ПРОЙТИ ВСЕ ПРИКЛЮЧЕНИЯ И ВЫЖИТЬ.\nУПРАВЛЕНИЕ:\n    ДВИГАТЬСЯ НА КЛАВИШИ 'A', 'D', ПРЫЖОК НА 'ПРОБЕЛ'.\nПАУЗА - 'ESC'."
 #define ENTER_NAME_TEXT "ВВЕДИТЕ ИМЯ ИГРОКА:\n(ENTER ДЛЯ ПРОДОЛЖЕНИЯ)"
 #define PAUSE_TEXT "ПАУЗА"
+#define EMPTY_RESULTS_TABLE_TEXT "ПУСТО"
+#define END_SCREEN_TEXT "СПАСИБО ЗА ИГРУ!"
 
 enum GAME_STATES
 {

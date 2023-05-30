@@ -140,6 +140,13 @@ void Menu::GetResults()
         result_num++;
     }
 
+    file.close();
+    cout << result_num << endl;
+    if (result_num == 0)
+    {
+        results = EMPTY_RESULTS_TABLE_TEXT;
+        result_num = 2;
+    }
     if (results_table)
         delete results_table;
     results_table = new Text(results.c_str(), WHITE, {Game::screen_w/2 - 200, static_cast<int>((Game::screen_h/8)*2), 
@@ -152,6 +159,11 @@ void Menu::CheckMenuState()
     switch (menu_state)
     {
     case MAIN_MENU:
+        name_input_str = "";
+        name_rect = {Game::screen_w/2 - 1, static_cast<int>((Game::screen_h/8)*3.5), 1, 100};
+        delete name;
+        name = new Text(name_input_str.c_str(), WHITE, name_rect);
+
         for (const auto& i : buttons)
             if (i.first != MAIN_MENU)
                 i.second->Update();
