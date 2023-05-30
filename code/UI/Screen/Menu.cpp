@@ -1,5 +1,7 @@
 #include "Menu.h"
 
+#include <fstream>
+
 #include "../../Helpers/TextureManager.h"
 #include "../Button.h"
 #include "../Text.h"
@@ -36,7 +38,7 @@ Menu::Menu() : Screen(MENU_MAIN_TEXT, WHITE, {Game::screen_w/2 - 100, Game::scre
     name_input_str = "";
     name_rect = {Game::screen_w/2 - 1, static_cast<int>((Game::screen_h/8)*3.5), 1, 100};
     name = new Text(name_input_str.c_str(), WHITE, name_rect);
-
+    results_table = nullptr;
 
 
 }
@@ -50,6 +52,9 @@ Menu::~Menu()
     delete info_text;
     delete enter_name_text;
     delete name;
+
+    if (results_table)
+        delete results_table;
 
     SDL_DestroyTexture(bg_tex);
     cout << "Menu dest" << endl;
@@ -89,8 +94,11 @@ void Menu::EnterName()
     {
         if (Game::event.key.keysym.sym == SDLK_RETURN)
         {
-            menu_state = START;
-            return;
+            if (name_input_str.size() > 0)
+            {
+                menu_state = START;
+                return;
+            }
         }
         if (Game::event.key.keysym.sym == SDLK_BACKSPACE)
         {
@@ -114,8 +122,28 @@ void Menu::EnterName()
             }
         }
         delete name;
-        name = new Text(name_input_str.c_str(), WHITE, name_rect);;
+        name = new Text(name_input_str.c_str(), WHITE, name_rect);
     }
+}
+
+
+void Menu::GetResults()
+{
+    int result_num = 0;
+    ifstream file;
+    string results = "", buff;
+    file.open("../results.txt");
+    while (getline(file, buff))
+    {
+        results += buff;
+        results += "\n";
+        result_num++;
+    }
+
+    if (results_table)
+        delete results_table;
+    results_table = new Text(results.c_str(), WHITE, {Game::screen_w/2 - 200, static_cast<int>((Game::screen_h/8)*2), 
+        400, (Game::screen_h/12)*result_num});
 }
 
 
@@ -142,6 +170,12 @@ void Menu::CheckMenuState()
         break;
 
     case RESULTS_TABLE:
+        GetResults();
+        menu_state = SHOW_RESULTS;
+        break;
+
+    case SHOW_RESULTS:
+        results_table->Update();
         buttons.at(MAIN_MENU)->Update();
         break;
 

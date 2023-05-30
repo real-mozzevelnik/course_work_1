@@ -68,6 +68,8 @@ class Level
         void GetDamage();
         // Переход на следующий уровень.
         void GoToNextLevel();
+        // Переходим в паузу.
+        void Pause();
     private:
         // Скорость передвижения объектов.
         int objects_speed;

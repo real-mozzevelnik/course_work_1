@@ -7,6 +7,7 @@
 class Level;
 class Screen;
 class Menu;
+class Pause;
 
 // Класс, отвечающий за основной игровой цикл.
 class Game
@@ -52,6 +53,8 @@ class Game
         Screen *next_level_screen;
         // Меню.
         Menu *menu;
+        // Экран паузы.
+        Pause* pause;
 
 };
 

@@ -20,8 +20,6 @@ UI::UI()
     health_destRect.w = HEALTH_BAR_WIDTH;
     health_destRect.h = 10;
 
-    SDL_SetRenderDrawColor(Game::renderer, 180, 0, 0, 0);
-
     coin = TextureManager::LoadTexture("../graphics/tiles/coin.png");
     coin_srcRect = {0,0,32,32};
     coin_destRect = {23,110,40,40};
@@ -51,6 +49,8 @@ void UI::UpdateCoinsNum()
 
 void UI::Update()
 {
+    SDL_SetRenderDrawColor(Game::renderer, 180, 0, 0, 0);
+
     coins_num->Update();
 
     SDL_RenderCopy(Game::renderer, coin, &coin_srcRect, &coin_destRect);

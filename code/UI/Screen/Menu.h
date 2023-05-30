@@ -18,6 +18,7 @@ class Menu : public Screen
         Text *info_text;
         Text *enter_name_text;
         Text *name;
+        Text* results_table;
         string name_input_str;
         SDL_Rect name_rect;
     public:
@@ -28,6 +29,7 @@ class Menu : public Screen
         void EnterName();
         void CheckMenuState();
         void PushButtons();
+        void GetResults();
 };
 
 #endif

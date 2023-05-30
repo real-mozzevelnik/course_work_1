@@ -228,6 +228,13 @@ void Level::GoToNextLevel()
 }
 
 
+void Level::Pause()
+{
+    if (Game::event.key.keysym.sym == SDLK_ESCAPE)
+        Game::state = PAUSE;
+}
+
+
 // Передвижение объектов.
 void Level::MoveObjects()
 {
@@ -315,6 +322,8 @@ void Level::Update()
     GetDamage();
     // Переход на следующий уровень.
     GoToNextLevel();
+    // Переход в меню паузы.
+    Pause();
 }
 
 
