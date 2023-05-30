@@ -63,7 +63,7 @@ Game::Game(const char* title, int xpos, int ypos, int width, int heigth, bool fu
     // Состояние игры в начале.
     state = MENU;
     // Номер уровня в начале игры.
-    level_num = 4;
+    level_num = 1;
     // Узнаем размеры экрана.
     SDL_GetRendererOutputSize(renderer, &screen_w, &screen_h);
     // Инициализируем основные игровые поля.
@@ -194,7 +194,7 @@ void Game::CheckState()
 void Game::SaveResults()
 {
     ofstream file;
-    file.open("../results.txt");
+    file.open("../results.txt", ios_base::app);
     file << "\n";
     file << menu->name_input_str << " : " << total_coins_earned;
     file.close();

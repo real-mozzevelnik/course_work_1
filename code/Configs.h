@@ -43,7 +43,7 @@ using namespace std;
 #define RESULTS_TABLE_BUTTON_TEXT "ТАБЛИЦА РЕЗУЛЬТАТОВ"
 #define INFO_BUTTON_TEXT "СПРАВКА"
 #define BACK_BUTTON_TEXT "ВЕРНУТЬСЯ"
-#define INFO_TEXT "ПРЕДЫСТОРИЯ:\n    КАПИБАРА НАТАША ОЧЕНЬ ЛЮБИТ ОПАСНЫЕ ПРИКЛЮЧЕНИЯ.\n    ПОМОГИ ЕЙ ПРОЙТИ ВСЕ ПРИКЛЮЧЕНИЯ И ВЫЖИТЬ.\nУПРАВЛЕНИЕ:\n    ДВИГАТЬСЯ НА КЛАВИШИ 'A', 'D', ПРЫЖОК НА 'ПРОБЕЛ'.\nПАУЗА - 'ESC'."
+#define INFO_TEXT "ПРЕДЫСТОРИЯ:\n    КАПИБАРА НАТАША ОЧЕНЬ ЛЮБИТ ОПАСНЫЕ ПРИКЛЮЧЕНИЯ.\n    ПОМОГИ ЕЙ ПРОЙТИ ВСЕ ПРИКЛЮЧЕНИЯ И ВЫЖИТЬ.\nУПРАВЛЕНИЕ:\n    ДВИГАТЬСЯ НА КЛАВИШИ 'A', 'D', ПРЫЖОК НА 'ПРОБЕЛ'.\n    ПАУЗА - 'ESC'."
 #define ENTER_NAME_TEXT "ВВЕДИТЕ ИМЯ ИГРОКА:\n(ENTER ДЛЯ ПРОДОЛЖЕНИЯ)"
 #define PAUSE_TEXT "ПАУЗА"
 #define EMPTY_RESULTS_TABLE_TEXT "ПУСТО"
