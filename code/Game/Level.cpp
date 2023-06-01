@@ -7,6 +7,7 @@
 #include "../Collections/ParticleEffects.h"
 #include "../UI/UI.h"
 #include "../Objects/StaticObjects/Coin.h"
+#include "../Collections/Sounds.h"
 
 // Объявляем статические переменные.
 vector<SDL_Rect*> Level::movable_objects;
@@ -147,6 +148,7 @@ void Level::GetCoins()
     {
         if (SDL_HasIntersection(&player->destRect, &coins[i]->destRect))
         {
+            SoundsManager::sounds.at(COIN_SOUND)->Play();
             // Обновляем кол-во собранных монет.
             coins_earned++;
             ui->UpdateCoinsNum();
@@ -196,6 +198,7 @@ void Level::GetDamage()
             {
                 if (enemy->Attack(player->xpos, player->ypos))
                 {
+                    SoundsManager::sounds.at(ENEMY_ATTACK_SOUND)->Play();
                     // Уменьшаем хп игрока.
                     player->heal_points -= ENEMY_STRENGTH;
                     // Проигрываем анимацию аттаки.
@@ -213,7 +216,10 @@ void Level::GetDamage()
 
     // Если хп кончилось - отправляем игрока на экран смерти.
     if (player->heal_points <= 0)
+    {
         Game::state = DEATH;
+        SoundsManager::sounds.at(DEATH_SOUND)->Play();
+    }
 }
 
 
@@ -221,6 +227,7 @@ void Level::GoToNextLevel()
 {
     if (player->xpos >= door->xpos-TILE_SIZE)
     {
+        SoundsManager::sounds.at(NEXT_LEVEL_SOUND)->Play();
         Game::level_num++;
         Game::total_coins_earned += coins_earned;
         Game::state = NEXT_LEVEL;

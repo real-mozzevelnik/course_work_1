@@ -6,6 +6,7 @@
 #include "../UI/Screen/Screen.h"
 #include "../UI/Screen/Menu.h"
 #include "../UI/Screen/Pause.h"
+#include "../Collections/Sounds.h"
 
 // Объявляем static поля класса.
 SDL_Renderer* Game::renderer = nullptr;
@@ -75,6 +76,8 @@ Game::Game(const char* title, int xpos, int ypos, int width, int heigth, bool fu
     end_screen = new Screen(END_SCREEN_TEXT, WHITE, {screen_w/2-285, screen_h/2-200, 600, 150});
     // Начинаем игровой цикл.
     isRunning = true;
+
+    SoundsManager::LoadAudios();
 }
 
 
@@ -90,6 +93,7 @@ Game::~Game()
     delete menu;
     delete pause;
     delete end_screen;
+    SoundsManager::FreeAudios();
     // Освобождаем всю выделенную SDL память.
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);

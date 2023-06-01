@@ -4,6 +4,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+// #include <SDL2/SDL_audio.h>
+#include <SDL2/SDL_mixer.h>
 #include <iostream>
 using namespace std;
 
@@ -69,6 +71,15 @@ enum MENU_STATES
     SHOW_RESULTS,
     INFO,
     EXIT_MENU
+};
+
+enum SOUNDS
+{
+    ENEMY_ATTACK_SOUND,
+    COIN_SOUND,
+    DEATH_SOUND,
+    JUMP_SOUND,
+    NEXT_LEVEL_SOUND
 };
 
 #define FPS 120

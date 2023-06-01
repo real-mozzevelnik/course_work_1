@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "../../Game/Level.h"
+#include "../../Collections/Sounds.h"
 
 Player::Player(SDL_Texture* tex, int x, int y) : Entity(tex, x, y)
 {
@@ -60,6 +61,7 @@ void Player::HandleInput()
     {
         if (!inAir)
         {
+            SoundsManager::sounds.at(JUMP_SOUND)->Play();
             Jump();
             directionY = -1;
             inAir = true;
