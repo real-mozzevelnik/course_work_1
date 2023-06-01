@@ -23,7 +23,6 @@ Player::Player(SDL_Texture* tex, int x, int y) : Entity(tex, x, y)
 
 Player::~Player()
 {
-    cout << "Player destructor" << endl;
 }
 
 

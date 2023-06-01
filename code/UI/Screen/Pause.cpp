@@ -1,6 +1,7 @@
 #include "Pause.h"
 
 #include "../../Helpers/TextureManager.h"
+#include "../../Collections/Sounds.h"
 
 Pause::Pause() : Screen(PAUSE_TEXT, WHITE, {Game::screen_w/2 - 100, Game::screen_h/8, 200, 100})
 {
@@ -19,7 +20,6 @@ Pause::Pause() : Screen(PAUSE_TEXT, WHITE, {Game::screen_w/2 - 100, Game::screen
 
 Pause::~Pause()
 {
-    cout << "Pause dest" << endl;
     for (auto i : buttons)
         delete i.second;
 
@@ -40,7 +40,14 @@ void Pause::PushButtons()
         {
             i.second->button_color.g = 150;
             if (Game::event.type == SDL_MOUSEBUTTONDOWN)
+            {
                 Game::state = i.second->state_to_change;
+                if (Game::state == MENU)
+                {
+                    SoundsManager::music[Game::level_num]->Stop();
+                    SoundsManager::music[0]->Play();
+                }
+            }
         }
         else
             i.second->button_color.g = 120;

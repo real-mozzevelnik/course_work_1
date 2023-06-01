@@ -25,6 +25,7 @@ class SoundsManager
 {
     public:
         static map<int, Sound*> sounds;
+        static vector<Sound*> music;
     public:
         static void LoadAudios();
         static void FreeAudios();

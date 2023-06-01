@@ -176,6 +176,7 @@ void Game::CheckState()
     {
         if (level_num == 5)
         {
+            SoundsManager::music[0]->Play();
             SaveResults();
             state = MENU;
             return;
@@ -208,6 +209,8 @@ void Game::SaveResults()
 // Запуск игры.
 void Game::Run()
 {
+
+    SoundsManager::music[0]->Play();
     // Нужное кол-во FPS.
     const int frameDelay = 1000 / FPS;
 

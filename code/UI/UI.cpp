@@ -35,7 +35,6 @@ UI::~UI()
     SDL_DestroyTexture(coin);
     if (coins_num)
         delete coins_num;
-    cout << "ui dest" << endl;
 }
 
 

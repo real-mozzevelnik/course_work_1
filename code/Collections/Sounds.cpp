@@ -1,6 +1,11 @@
 #include "Sounds.h"
 
+#include "../Game/Game.h"
+#include <sstream>
+
+
 map<int, Sound*> SoundsManager::sounds;
+vector<Sound*> SoundsManager::music;
 
 Sound::Sound(const char* filepath)
 {
@@ -15,7 +20,6 @@ Sound::Sound(const char* filepath)
 
 Sound::~Sound()
 {
-    cout << "Sound dest" << endl;
     SDL_FreeWAV(waveStart);
     SDL_CloseAudioDevice(device);
 }
@@ -46,6 +50,19 @@ void SoundsManager::LoadAudios()
     sounds.insert({JUMP_SOUND, tmp_s});
     tmp_s = new Sound("../sounds/mate.wav");
     sounds.insert({NEXT_LEVEL_SOUND, tmp_s});
+
+    string path;
+    stringstream ss;
+
+    for (int i = 0; i < 5; i++)
+    {
+        ss << "../sounds/level_" << i << ".wav";
+        path = ss.str();
+        ss.str(string());
+        ss.clear();
+        tmp_s = new Sound(path.c_str());
+        music.push_back(tmp_s);
+    }
 }
 
 
@@ -53,4 +70,6 @@ void SoundsManager::FreeAudios()
 {
     for (auto i : sounds)
         delete i.second;
+    for (auto i : music)
+        delete i;
 }

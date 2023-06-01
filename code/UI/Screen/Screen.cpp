@@ -9,7 +9,6 @@ Screen::Screen(const char* message, SDL_Color text_color, SDL_Rect text_pos)
 
 Screen::~Screen()
 {
-    cout << "screen dest" << endl;
     delete message_text;
     delete continue_text;
 }

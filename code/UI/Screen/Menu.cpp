@@ -5,6 +5,7 @@
 #include "../../Helpers/TextureManager.h"
 #include "../Button.h"
 #include "../Text.h"
+#include "../../Collections/Sounds.h"
 
 Menu::Menu() : Screen(MENU_MAIN_TEXT, WHITE, {Game::screen_w/2 - 100, Game::screen_h/8, 200, 100})
 {
@@ -57,7 +58,6 @@ Menu::~Menu()
         delete results_table;
 
     SDL_DestroyTexture(bg_tex);
-    cout << "Menu dest" << endl;
 }
 
 
@@ -172,6 +172,7 @@ void Menu::CheckMenuState()
     case START:
         Game::state = CREATE_NEW_LEVEL;
         menu_state = MAIN_MENU;
+        SoundsManager::music[0]->Stop();
         break;
     
     case ENTER_NAME:

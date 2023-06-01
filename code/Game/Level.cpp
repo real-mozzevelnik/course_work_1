@@ -28,6 +28,7 @@ int Level::coins_earned;
 
 Level::Level()
 {
+    SoundsManager::music[Game::level_num]->Play();
     coins_earned = 0;
     Map::CreateMap();
 }
@@ -217,6 +218,7 @@ void Level::GetDamage()
     // Если хп кончилось - отправляем игрока на экран смерти.
     if (player->heal_points <= 0)
     {
+        SoundsManager::music[Game::level_num]->Stop();
         Game::state = DEATH;
         SoundsManager::sounds.at(DEATH_SOUND)->Play();
     }
@@ -227,6 +229,7 @@ void Level::GoToNextLevel()
 {
     if (player->xpos >= door->xpos-TILE_SIZE)
     {
+        SoundsManager::music[Game::level_num]->Stop();
         SoundsManager::sounds.at(NEXT_LEVEL_SOUND)->Play();
         Game::level_num++;
         Game::total_coins_earned += coins_earned;

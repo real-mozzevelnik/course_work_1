@@ -12,7 +12,6 @@ Coin::Coin(SDL_Texture* tex, int x, int y) : Tile(tex, x, y, {0,0,32,32})
 Coin::~Coin() 
 {
     TextureManager::DestroyAnimationTextures(animation_textures);
-    cout << "Coin dest" << endl;
 }
 
 

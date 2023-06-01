@@ -17,7 +17,6 @@ Button::Button(const char* button_text, SDL_Rect button_destRect, int state)
 Button::~Button()
 {
     delete text;
-    cout << "Button dest" << endl;
 }
 
 
